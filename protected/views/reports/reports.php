@@ -157,138 +157,46 @@
         <?php echo CHtml::Label('Period', 'Period', array('class'=>'label')); ?>    
 
         <span class="short-input-calendar-reports">
-            <?php          
-                           /*   $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-                               // 'model'=>$model, //Model object
-                              //  'language' => 'de',
-                                'id'=>'datepicker-left-reports-period',  
-                                'name' => 'fromDate',
-                               // 'attribute'=>'DateOfBirth', //attribute name
-                                //'mode'=>'date', //use "time","date" or "datetime" (default)                   
-                                'options'=>array(
-                                            'showAnim'=>'show',
-                                            'showOn'=>'button',
-                                            'changeYear' => 'true',
-                                            'yearRange' => '1940:+0',
-                                            'changeMonth' => 'false',
-                                            'minDate'=>'2008-01-01', // HARDCODED
-                                            'maxDate'=>'new Date()',
-                                            'dateFormat'=>'yy-mm-dd',
-                                           // 'buttonImage' =>  Yii::app()->request->baseUrl . '/images/calendar.gif',
-                                           // 'buttonImageOnly' => true,
-                                            //'themeUrl'=>'/js/jquery-ui-1.8/themes',
-                                            //'theme'=>'ui-lightness',
-                                        ),
-                                 'htmlOptions'=>array('readonly'=>'readonly', 'size'=>'15'),
-                            )); */
-
-                echo CHtml::textField('fromDate', '', array('id'=>'datepicker-left-reports-period'));
-            ?>
-
+            <?php echo CHtml::textField('fromDate', '', array('id'=>'datepicker-left-reports-period', 'readonly' => 'readonly')); ?>
         </span>
 
         <span class="short-input-calendar-reports"> 
-          <?php 
-             echo CHtml::textField('toDate', '', array('id'=>'datepicker-right-reports-period'));
-          ?>    
-
+          <?php  echo CHtml::textField('toDate', '', array('id'=>'datepicker-right-reports-period', 'readonly' => 'readonly')); ?>    
         </span>
-
-
     </div> 
-    
-       <?php //echo CHtml::button('Reset dates', array('onclick'=>"js: $('#fromDate').val(''); $('#toDate').val('');")) ?>
-
 </div>
       
 </div>  
-    <script type="text/javascript">
-    
-    	$(document).ready(function(){
-    		if ($('.select-reports #program option:selected').text() == 'any'){
-    			$('.space-for-perfectAttendance').css('display','none');
-    			$('.perfectAttendance-label').css('display','none');
-    		}
-    		$('.select-reports #program').change(function(){
-    			if ($('.select-reports #program option:selected').text() == 'any'){
-	    			$('.space-for-perfectAttendance').css('display','none');
-	    			$('.perfectAttendance-label').css('display','none');
-	    		}else{
-	    			$('.space-for-perfectAttendance').css('display','block');
-	    			$('.perfectAttendance-label').css('display','block');
-	    		}
-    		});
-    	});
+<script type="text/javascript">
 
-      // $("#showAdvanced").toggle(function(){$(this).attr("src", window.location.pathname+"/images/down.jpg");}, function(){$(this).attr("src", window.location.pathname+"/images/up.jpg");});
-        $("#showAdvanced").toggle(function(){$(this).attr("src", $(this).attr("tag")+"/images/downarrow.png");}, function(){$(this).attr("src", $(this).attr("tag")+"/images/uparrow.png");});
-        function changeUrl()
-        {
-            var url =$("#id1").val();
-            url=url+"&programId="+$("#programs").val();
-            url=url+"&sessionId="+$("#sessions").val();
-            //window.location.href=url;
-            window.open(url, 'Programs Report');
-        }
-        $(document).ready(function(){
-            $(".advanced").hide();
+    $(document).ready(function(){
+            if ($('.select-reports #program option:selected').text() == 'any'){
+                    $('.space-for-perfectAttendance').css('display','none');
+                    $('.perfectAttendance-label').css('display','none');
+            }
+            $('.select-reports #program').change(function(){
+                    if ($('.select-reports #program option:selected').text() == 'any'){
+                            $('.space-for-perfectAttendance').css('display','none');
+                            $('.perfectAttendance-label').css('display','none');
+                    }else{
+                            $('.space-for-perfectAttendance').css('display','block');
+                            $('.perfectAttendance-label').css('display','block');
+                    }
+            });
+    });
 
-        });
-    </script>
+  // $("#showAdvanced").toggle(function(){$(this).attr("src", window.location.pathname+"/images/down.jpg");}, function(){$(this).attr("src", window.location.pathname+"/images/up.jpg");});
+    $("#showAdvanced").toggle(function(){$(this).attr("src", $(this).attr("tag")+"/images/downarrow.png");}, function(){$(this).attr("src", $(this).attr("tag")+"/images/uparrow.png");});
+    function changeUrl()
+    {
+        var url =$("#id1").val();
+        url=url+"&programId="+$("#programs").val();
+        url=url+"&sessionId="+$("#sessions").val();
+        //window.location.href=url;
+        window.open(url, 'Programs Report');
+    }
+    $(document).ready(function(){
+        $(".advanced").hide();
 
- <?php //echo CHtml::listBox('sessions2', '<any>', array()); ?>    
-<?php
-
-
-//$data= CHtml::listData(Color::model()->findAll(), 'ID', 'Name');
-/* $this->widget('ext.EchMultiselect.EchMultiselect', array(
-    // the data model associated with this widget:
-   // 'model' => $model,
-     // the attribute associated with drop down list of this widget:
-  //  'dropDownAttribute' => 'color',     
-    // data for generating the options of the drop down list:
-    'data' => array(),    
-    // the name of the drop down list (this must be set if 'model' and 'dropDownAttribute' are not set):
-    'name' => 'sessions11',
-    // the selected input value(s) (used only if 'model' and 'dropDownAttribute' are not set)
-    'value' => array(), 
-    // additional HTML attributes for the drop down list: 
-    'dropDownHtmlOptions'=> array(
-        'style'=>'width:508px;',
-    ),
-    // options for the jQuery UI MultiSelect Widget
-    // (see the project page for available options):
-    'options' => array( 
-        'header'=>true,
-        'height'=>175,
-        'minWidth'=>225,
-        'checkAllText'=>Yii::t('application','Check all'),
-        'uncheckAllText'=>Yii::t('application','Uncheck all'),
-        'noneSelectedText'=>Yii::t('application','Select an Option'),
-        'selectedText'=>Yii::t('application','# selected'),
-        'selectedList'=>false,
-        'show'=>'',
-        'hide'=>'',
-        'autoOpen'=>false,
-        'multiple'=>true,
-        'classes'=>'',
-        'position'=>array(),
-        // set this to true, if you want to use the Filter Widget
-        'filter'=>false,
- 
-    ),
-    // options for the jQuery UI MultiSelect Filter Widget 
-    'filterOptions'=> array(
-        'label' => Yii::t('application','Filter:'),
-        'width'=>100,
-        'placeholder'=>Yii::t('application','Enter keywords'),
-        'autoReset'=>false,
-    ),
-));
-*/
-
-
-
-
-    
-
+    });
+</script>

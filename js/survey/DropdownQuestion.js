@@ -1,15 +1,8 @@
-function DropdownQuestion(id, title, required, listOfItems) {
-    DropdownQuestion.superClass.apply(this, [id, QuestionType.DROPDOWN, title, required]);
+function DropdownQuestion(id, title, required, variants) {
+    DropdownQuestion.superClass.apply(this, [id, QuestionType.DROPDOWN, title, required, variants]);
     
     this.getEditHtml = function() {
-        var questionTypeDropdownTitle = '<label>Question title</label>';
-        var questionTypeDropdownTitleValue = '<span class="short-input"><input type="text" class="surveyStaticTitle" value="' 
-            + this.title 
-            + '"></span>';
-        var questionTypeDropdownTitleRow = '<div class="surveyQuestionRow">' 
-            + questionTypeDropdownTitle 
-            + questionTypeDropdownTitleValue 
-            + '</div><div class="clear" />'; 
+        var questionTypeDropdownTitleRow = this.getQuestionTitle(); 
         
         var questionTypeDropdownListTitle = '<label>Question type</label>';
         var questionTypeDropdownListTitleValue = this.getQuestionTypeDropdown();
@@ -76,7 +69,7 @@ function DropdownQuestion(id, title, required, listOfItems) {
         var answerLenfth = answerValues.length;
         var answerItems = '';
         for (var i=0; i<answerLenfth; i++){
-            var answerItem = '<option value=' + answerValues[i] + '>' + answerValues[i] + '</option>';;
+            var answerItem = '<option value="' + answerValues[i] + '">' + answerValues[i].title + '</option>';;
             answerItems += answerItem;
         }
         var answerResult = '<span class="surveyQuestionType"><select class="selectListUISelect">' 
@@ -91,7 +84,8 @@ function DropdownQuestion(id, title, required, listOfItems) {
         var answerItems = '';
         for (var i=0; i<answerLenfth; i++){
             var answerItem = '<li class="multipleChoiceLi">'
-            + '<span class="short-input short-input-multiple"><input type="text" class="selectlist" value='+ answerValues[i] +' /></span>'
+            + '<span class="short-input short-input-multiple selectListInputEdit"><input type="text" name="Variants" class="selectlist"'
+            + ' value="' + answerValues[i].title +'" ' + this.getOptionMaxLength() + ' /></span>'
             + '<a href="#" onclick="removeSingleLine.call($(this)); return false;" class="removeMultipleChoiceLine"></a>'
             + '</li>';
             answerItems += answerItem;
@@ -99,9 +93,5 @@ function DropdownQuestion(id, title, required, listOfItems) {
         var answerResult = '<ul class="multipleChoiceUl">' + answerItems + '</ul><div class="clear"></div>';
         return answerResult;
     };
-    
-    this.flush = function () {};
-    
-    this.variants = listOfItems;
 }
-DropdownQuestion.inheritsFrom(BaseQuestion);
+DropdownQuestion.inheritsFrom(BaseVariantQuestion);

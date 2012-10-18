@@ -48,6 +48,7 @@ class QueryHousehold extends BaseModel
                 array('Emergency1FirstName, Emergency1LastName, Emergency1Relationship, 
                        Emergency2FirstName, Emergency2LastName, Emergency2Relationship', 'length', 'max'=>50),
                 array('PicasaLink', 'length', 'max'=>255),
+                array('PicasaLink', 'application.extensions.Validators.Link', 'type' => LinkType::GOOGLE_PICASA),
                 array('Name', 'required'),
                 array('countries', 'checkLocation', 'id' => $_POST['countries']),
                 array('states', 'checkLocation', 'id' => $_POST['states']),

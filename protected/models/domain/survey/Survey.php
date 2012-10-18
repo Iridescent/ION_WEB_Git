@@ -1,7 +1,6 @@
 <?php
 
 class Survey extends BaseModel {
-    
     public $ProgramId;
     public $JsonQuestions;
     
@@ -16,7 +15,9 @@ class Survey extends BaseModel {
     public function rules() {
         return array(
             array('Title, SessionId', 'required'),
-            array('Title, Description', 'length', 'max' => 255),
+            array('Title', 'length', 'max' => 50),
+            array('Description', 'length', 'max' => 255),
+            array('Questions', 'application.extensions.Validators.SerializedArrayNotEmpty'),
             array('ID, Title, Description, Questions, SessionId, Enabled, UpdateUserId, LastUpdated', 'safe'),
         );
     }
@@ -34,22 +35,34 @@ class Survey extends BaseModel {
         );
     }
     
-    public function QuestionsToJSON() {
-        $questions = array();
-        if ($this->Questions) {
-            $questions = unserialize($this->Questions);
+    public function beforeValidate(){
+        $this->Questions = $this->jsonToPHP($this->JsonQuestions);
+        /*if (QuerySurvey::model()->DoesAlreadyExist($this->ID, $this->SessionId)) {
+            $this->addError('SessionId', 'Another Survey for selected Session already exists');
+            return false;
+        }*/
+        if (QuerySurvey::model()->IsAlreadyReplied($this->ID)) {
+            $this->addError('ID', 'There is Reply on this Survey');
+            return false;
         }
-        return json_encode($questions);
+        return parent::beforeValidate();
     }
 
     public function beforeSave() {
-        $this->Questions = $this->jsonToPHP($this->JsonQuestions);
         $this->SetUpdateInfo();
         return parent::beforeSave();
     }
     
     public function afterFind(){
         $this->ProgramId = $this->SessionRelation->Program;
+        if ($this->Questions) {
+            $questions = unserialize($this->Questions);
+            $this->JsonQuestions = json_encode($questions);
+        }
+    }
+    
+    public function afterConstruct() {
+        $this->JsonQuestions = json_encode(array());
     }
 }
 

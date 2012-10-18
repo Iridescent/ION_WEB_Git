@@ -10,9 +10,10 @@ class FileAmazonUploader {
     
     public $_amazonFile = NULL;
     
-    public static function uploadToAmazonS3($uploadAmazonFileName, $localAmazonFileName = NULL, $amazonBucket) {
+    public static function uploadToAmazonS3($uploadAmazonFileName, $rootPath, $localAmazonFileName = NULL, $amazonBucket) {
+        
         try {
-            $success = Yii::app()->s3->upload(Yii::app()->getBasePath().Yii::app()->params['commonMedia']['videoUploadConvertedPath'].$uploadAmazonFileName , $localAmazonFileName, $amazonBucket);
+            $success = Yii::app()->s3->upload($rootPath.Yii::app()->params['commonMedia']['videoUploadConvertedPath'].$uploadAmazonFileName , $localAmazonFileName, $amazonBucket);
             if ($success) {
                 $_amazonFile = array (
                                    'AmazonPath' => FileAmazonUploader::getAmazonS3FilePath($uploadAmazonFileName),

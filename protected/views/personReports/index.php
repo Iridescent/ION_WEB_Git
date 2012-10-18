@@ -64,13 +64,13 @@
         <?php echo CHtml::Label('Period', 'Period', array('class'=>'label')); ?>    
         <span class="short-input-calendar-reports">
             <?php          
-                echo CHtml::textField('fromDate', '', array('id'=>'datepicker-left-reports-period'));
+                echo CHtml::textField('fromDate', '', array('id'=>'datepicker-left-reports-period', 'readonly' => 'readonly'));
             ?>
         </span>
 
         <span class="short-input-calendar-reports"> 
             <?php 
-                echo CHtml::textField('toDate', '', array('id'=>'datepicker-right-reports-period'));
+                echo CHtml::textField('toDate', '', array('id'=>'datepicker-right-reports-period', 'readonly' => 'readonly'));
             ?>    
         </span>
     </div>
@@ -150,25 +150,29 @@
     echo $this->renderPartial('_persons', array('model'=>$person_model)); 
 ?>
     <script type="text/javascript">
-    
-    	$(document).ready(function(){
-    		if ($('.select-reports #program option:selected').text() == 'any'){
-    			$('.space-for-perfectAttendance').css('display','none');
-    			$('.perfectAttendance-label').css('display','none');
-    		}
-    		$('.select-reports #program').change(function(){
-    			if ($('.select-reports #program option:selected').text() == 'any'){
-	    			$('.space-for-perfectAttendance').css('display','none');
-	    			$('.perfectAttendance-label').css('display','none');
-	    		}else{
-	    			$('.space-for-perfectAttendance').css('display','block');
-	    			$('.perfectAttendance-label').css('display','block');
-	    		}
-    		});
-                
-                if('#editEntityButton:contains("Add to report")'){
+        function addClassEditEntityButton160 (){
+            if('#editEntityButton:contains("Add to report")'){
                    $('#editEntityButton').addClass('add-edit-delete-bttn-160'); 
                 }
+        }
+    	$(document).ready(function(){
+    		if ($('.select-reports #program option:selected').text() == 'any'){
+                    $('.space-for-perfectAttendance').css('display','none');
+                    $('.perfectAttendance-label').css('display','none');
+    		}
+    		$('.select-reports #program').change(function(){
+                    if ($('.select-reports #program option:selected').text() == 'any'){
+                        $('.space-for-perfectAttendance').css('display','none');
+                        $('.perfectAttendance-label').css('display','none');
+                    }else{
+                        $('.space-for-perfectAttendance').css('display','block');
+                        $('.perfectAttendance-label').css('display','block');
+                    }
+    		});
+                
+                addClassEditEntityButton160();
+                
+                $('.reports-programs-page .toggle-reports-advanced .multi-select').show();
     	});
 
       // $("#showAdvanced").toggle(function(){$(this).attr("src", window.location.pathname+"/images/down.jpg");}, function(){$(this).attr("src", window.location.pathname+"/images/up.jpg");});

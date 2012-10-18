@@ -11,7 +11,7 @@ class AmfServerController extends Controller {
         $server = new Zend_Amf_Server();
         $server->setProduction(false);//on production change to true
         $server->setClass("KeyTagService");
-        $server->setClass("SessionOutcomeService");
+        $server->setClass("SurveyService");
         $handle = $server->handle();
         echo $handle;
     }

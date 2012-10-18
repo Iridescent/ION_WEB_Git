@@ -29,12 +29,12 @@ $this->breadcrumbs=array(
         }
     ?>
     <div class="row">     
-        <?php echo CHtml::fileField('uploadvideo', 'Select video file..', array('types'=>'mov, flv, mpeg')); ?> 
+        Video:&nbsp;<?php echo CHtml::fileField('uploadvideo', 'Select video file..', array('types'=>'mov, flv, mpeg')); ?> 
     </div>
 
     
     <div class="row">         
-        <?php echo CHtml::fileField('uploadimage', 'Select image file..'); ?> 
+        Image:&nbsp;<?php echo CHtml::fileField('uploadimage', 'Select image file..'); ?> 
     </div>    
    <?php
   /* $this->widget('application.extensions.jwplayer.JWplayer', array(

@@ -65,7 +65,7 @@ class KeyTagService
     const sessionAdditionalUpdateQuery = "UPDATE sessionadditional SET Duration = :duration, WeatherId = :weatherid, LastUpdated = :lastupdated
                                           WHERE SessionId = :sessionid";
 
-    public function GetTimeZoneOffset() {
+    public function GetTimeZoneOffset($delay) {
         $timezone = new DateTimeZone(date_default_timezone_get());
         return $timezone->getOffset(new DateTime("now"));
     }

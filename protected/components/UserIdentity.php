@@ -42,15 +42,19 @@ class UserIdentity extends CUserIdentity
         return $this->_id;
     }
     
-    public static function IsSuperAdmin(){
+    public static function IsAdmin() {
+        return self::IsSuperAdmin() || self::IsLocalAdmin();
+    }
+    
+    public static function IsSuperAdmin() {
         return Yii::app()->user->checkAccess(UserRoles::SuperAdmin);
     }
     
-    public static function IsLocalAdmin(){
+    public static function IsLocalAdmin() {
         return Yii::app()->user->checkAccess(UserRoles::LocalAdmin);
     }
     
-    public static function Location(){
+    public static function Location() {
         return Yii::app()->user->location;
     }
     

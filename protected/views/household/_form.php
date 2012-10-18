@@ -70,7 +70,7 @@
         $citiesList = Locations::selectCities($defaultState);
 
         echo '<div class="left">';
-        echo CHtml::label('Country', 'countries', array('class'=>'label'));
+        echo '<label class="label" for="countries">Country <span class="required">*</span></label>';
         echo "<span class=\"short-input-select\">";
         echo CHtml::dropDownList('countries', $defaultCountry , $countriesList,  
                     array(
@@ -87,7 +87,7 @@
         echo '</div>';
 
         echo '<div class="left">';
-        echo CHtml::label('State', 'states', array('class'=>'label'));
+        echo '<label class="label" for="states">State <span class="required">*</span></label>';
         echo "<span class=\"short-input-select\">";
         echo CHtml::dropDownList('states', $defaultState, $statesList,  
                     array(
@@ -103,8 +103,8 @@
         echo $form->error($model,'states', array('class'=>'errorMessage right'));
         echo '</div>';
 
-            echo '<div class="left">';
-        echo CHtml::label('City', 'cities', array('class'=>'label'));
+        echo '<div class="left">';
+        echo '<label class="label" for="cities">City <span class="required">*</span></label>';
         echo "<span class=\"short-input-select\">";
         echo CHtml::dropDownList('cities', $defaultCity, $citiesList);//, array('multiple' => 'multiple', 'key'=>'trainings', 'class'=>'multiselect')); 
         echo "</span>";

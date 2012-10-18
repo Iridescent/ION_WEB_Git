@@ -8,6 +8,9 @@ class QuestionType {
     const DROPDOWN = 5;// dropdown
     const SCALE = 6;
     const GRID = 7;
+    const IMAGE = 8;
+    const VIDEO = 9;
+    const SMILES = 10;
 }
 
 ?>

@@ -13,6 +13,8 @@ $this->navigationMenu = array(
         'itemOptions' => $this->getTabItemOptions(NavigationType::MANAGE_SCHOOLS)),
     array('label'=>'Surveys', 'url'=>array('survey/index'), 'visible'=>!Yii::app()->user->isGuest,
         'itemOptions' => $this->getTabItemOptions(NavigationType::MANAGE_SURVEYS)),
+    array('label'=>'Synchronization', 'url'=>array('synchronization/index'), 'visible'=>!Yii::app()->user->isGuest,
+        'itemOptions' => $this->getTabItemOptions(NavigationType::MANAGE_SYNCHRONIZATION)),
     /*array('label'=>'Sites', 'url'=>array('sites/index'), 'visible'=>!Yii::app()->user->isGuest,
         'itemOptions' => $this->getTabItemOptions(NavigationType::MANAGE_SITES)),*/
     );

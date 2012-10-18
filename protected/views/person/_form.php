@@ -82,7 +82,7 @@ function onHouseholdChanged(householdId)
                                 'dateFormat'=>  Localization::CLIENT_DATE_FORMAT,
                                 'buttonImage' =>  Yii::app()->request->baseUrl . '/images/logo.png',
                                 'buttonImageOnly' => true,
-                                    ),
+                            ),
                         ));
                     ?>
                 </span>
@@ -200,15 +200,15 @@ function onHouseholdChanged(householdId)
             </div>
             <div>
                 <?php $personTypeList = CHtml::listData(PersonType::model()->findAll(array('order' => 'Name')), 'ID', 'Name'); ?>
-                <?php $personTypeList = ReportsController::unionArrays(array("_all" => "Select a role:") , $personTypeList);?>
+                <?php $personTypeList = ReportsController::unionArrays(array("" => "Select a role:") , $personTypeList);?>
                 <span class="short-input-select short-input-person-right-select">
-                    <?php echo CHtml::dropDownList('Type', $model->Type, $personTypeList,  
+                    <?php echo CHtml::dropDownList('Person[Type]', $model->Type, $personTypeList,  
                         array(
                         'ajax' => array(
                             'type'=>'POST',
                             'url'=> CController::createUrl('person/SubtypeByType'),
-                            'update'=>'#Subtype',
-                            'data'=>array('type_id'=> 'js:$(\'#Type\').val()'), 
+                            'update'=>'#Person_Subtype',
+                            'data'=>array('type_id'=> 'js:$(\'#Person_Type\').val()'), 
                         ))                                    
                      ); ?>
                 </span>
@@ -221,7 +221,7 @@ function onHouseholdChanged(householdId)
             <div>
                 <?php $subtypesList = CHtml::listData(Personsubtype::model()->findAllByAttributes(array('PersonType'=>$model->Type), array('order' => 'Name')), 'ID', 'Name'); ?>
                 <span class="short-input-select short-input-person-right-select">
-                    <?php echo CHtml::dropDownList('Subtype', $model->Subtype, $subtypesList, array('empty' => 'Select a relation:')); ?>
+                    <?php echo $form->dropDownList($model, 'Subtype', $subtypesList, array('empty' => 'Select a relation:')); ?>
                 </span>
                 <?php echo $form->error($model,'Subtype'); ?>
             </div>
@@ -249,7 +249,7 @@ function onHouseholdChanged(householdId)
                             'options'=>array(
                                 'minLength'=>'2',
                                 'select'=>'js: function(event, ui){ $("#Person_School").val(ui.item.id); }',
-                                'change'=>'js: function(event, ui) { debugger; if (!ui.item) { $("#Person_School").val(""); } }',
+                                'change'=>'js: function(event, ui) { if (!ui.item) { $("#Person_School").val(""); } }',
                             ),
                         ));
                         echo $form->hiddenField($model, 'School');
@@ -304,7 +304,7 @@ function onHouseholdChanged(householdId)
 
         <div class="clear"></div>
         
-        <div class="row household-row">
+        <div class="row household-row" style="margin-left: 5px;">
             <?php echo CHtml::openTag('fieldset', array('class'=>'inlineLabels', 'style'=>'width: auto;')); ?>
             <?php echo CHtml::openTag('legend', array('class'=>'inlineLabels')); ?>
             <?php echo CHtml::Label(Yii::t('application','Emergency contact 1'),''); ?>
@@ -426,7 +426,7 @@ function onHouseholdChanged(householdId)
                 $(document).ready(function(){
                     
                     function validateURL(textval) {
-                        var urlregex = new RegExp( "^(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$");
+                        var urlregex = new RegExp("^https?://\.*$");
                         return urlregex.test(textval);
                     }
                     
@@ -470,6 +470,65 @@ function onHouseholdChanged(householdId)
             
         </div><!--END [participantsLinksInBottom]-->
         
+        <?php $cmuser = $model->CMUserProfileRelation; ?>
+        <?php if ($cmuser) : ?>
+        <div class="cm-user-profile-wrapper-border-top"></div>
+        <div class="clear"></div>
+        <div class="cm-user-profile-wrapper"><!--START [cm-user-profile-wrapper]-->
+            <h2>CM User Profile</h2>
+            <div class="photo-profile"><!--START [photo-profile]-->
+                <div class="photo">
+                    <?php echo CHtml::image($cmuser->ProfilePictureUrl ? $cmuser->ProfilePictureUrl : 'images/no-photo.png'); ?>
+                </div>
+                <div class="name-profile">
+                    <div class="name-lastName">
+                        <span class="name"></span>
+                        <span class="lastname"></span>
+                    </div>
+                    <?php
+                        if ($cmuser->ProfileUrl) {
+                            echo CHtml::link('Profile', $cmuser->ProfileUrl, array ('target' => '_blank','class' => 'user-profile-link'));
+                        }
+                    ?>
+                </div>
+            </div><!--END [photo-profile]-->
+            <div class="user-badges"><!--START [user-badges]-->
+                <h3><span>Badges</span></h3>
+                <div class="badges">
+                    <?php
+                        if ($cmuser->Badges) {
+                            $badges = unserialize($cmuser->Badges);
+                            if (count($badges) > 0) {
+                                foreach($badges as $badge) {
+                                    echo '<div class="one-badge">', CHtml::image($badge->url, $badge->name, array('style' => 'float: left; margin-right: 10px;')), '</div>';
+                                }
+                            }
+                            else {
+                                echo CHtml::image('images/no-badges.png');
+                            }
+                        }
+                    ?>
+                </div>
+            </div><!--END [user-badges]-->
+            <div class="clear"></div>
+            <div class="experiments-block"><!--START [experiments-block]-->
+                <h3>Experiments</h3>
+                <?php
+                    if ($cmuser->Experiments) {
+                        $experiments = unserialize($cmuser->Experiments);
+                        foreach($experiments as $experiment) {
+                            echo '<div class="one-link">', CHtml::link($experiment->title, $experiment->url, array ('target' => '_blank')), '</div>';
+                        }
+                    }
+                ?>
+            </div><!--END [experiments-block]-->
+            <div class="clear"></div>
+            <div class="points-block"><!--START [points-block]-->
+                <h3>Points: <span><?php echo $cmuser->Points; ?></span></h3>
+            </div><!--END [points-block]-->
+        </div><!--END [cm-user-profile-wrapper]-->
+        <?php endif; ?>
+        
         <div class="wrapper-styled-buttons bottom-20-p">
             <span class="styled-bttn right-10"><?php echo CHtml::submitButton(Yii::t('Yii', 'Cancel'), array('name'=>'cancel', 'onclick'=> "js: history.back();")); ?></span>
             <span class="styled-bttn"><?php echo CHtml::submitButton('OK', array('return' => true)); ?></span>
@@ -478,3 +537,16 @@ function onHouseholdChanged(householdId)
     </div>
 <?php $this->endWidget(); ?>
 </div>
+<script type="text/javascript">
+    function changeNameFromInput (inputClass, spanClass){
+        var nameVal = $(inputClass).val();
+        $(spanClass).text(nameVal);
+        $(inputClass).change(function(){
+            $(spanClass).text($(inputClass).val());
+        });
+    }
+    $(document).ready(function(){
+        changeNameFromInput('#Person_FirstName','.cm-user-profile-wrapper .name-profile .name');
+        changeNameFromInput('#Person_LastName','.cm-user-profile-wrapper .name-profile .lastname');
+    });
+</script>

@@ -31,6 +31,7 @@ return array (
         'application.models.query.person.*',
         'application.models.query.program.*',
         'application.models.query.survey.*',
+        'application.models.query.synchronization.*',
         'application.models.query.user.*',
         'application.components.*',
         'application.components.document.*',
@@ -158,23 +159,26 @@ return array (
     // using Yii::app()->params['paramName']
    
     'params'=>array(
-            'commonMedia' => array(
-		// this is used in contact page
-		'adminEmail'=>'admin@keytag.com',
-                // Video and Image uploading and converting parameters
-                'maxFileSize'=> 50000000,
-                'convertWidth' => 480,
-                'convertHeight' => 270,
-                'imageUploadPath'=>'/data/files/image/',
-                'imageThumbnailPath'=>'/data/files/image/thumbnail/',
-                'videoUploadOriginalPath'=>'/data/files/video/original/',
-                'videoUploadConvertedPath'=>'/data/files/video/converted/',
-                'videoThumbnailPath'=>'/data/files/video/thumbnail',
-                'transcoderPath'=> 'C:/mencoder/mencoder.exe',
-                'encodeCommand'=> '!cmd_path -forceidx -of lavf -oac mp3lame -lameopts abr:br=56 -srate 22050 -ovc lavc -lavcopts vcodec=flv:vbitrate=250:mbd=2:mv0:trell:v4mv:cbp:last_pred=3 -vf scale=!width:!height -o !convertfile !videofile',
-                'videoThumnbailCommand'=>'-i !videofile -an -y -f mjpeg -ss !seek -vframes 1 !thumbfile'
-            ),
-            
+        'commonMedia' => array(
+            // this is used in contact page
+            'adminEmail'=>'admin@keytag.com',
+            // Video and Image uploading and converting parameters
+            'maxFileSize'=> 50000000,
+            'convertWidth' => 480,
+            'convertHeight' => 270,
+            'imageUploadPath'=>'/public/files/image/',
+            'imageThumbnailPath'=>'/public/files/image/thumbnail/',
+            'videoUploadOriginalPath'=>'/public/files/video/original/',
+            'videoUploadConvertedPath'=>'/public/files/video/converted/',
+            'videoThumbnailPath'=>'/public/files/video/thumbnail',
+            'transcoderPath'=> '/usr/bin/ffmpeg', //'C:/mencoder/mencoder.exe',
+            'encodeCommand'=> '!cmd_path -i !videofile -s !widthx!height -r 15 -b 250 -ar 22050 -ab 48 !convertfile', //'!cmd_path -forceidx -of lavf -oac mp3lame -lameopts abr:br=56 -srate 22050 -ovc lavc -lavcopts vcodec=flv:vbitrate=250:mbd=2:mv0:trell:v4mv:cbp:last_pred=3 -vf scale=!width:!height -o !convertfile !videofile',
+            'videoThumnbailCommand'=>'-i !videofile -an -y -f mjpeg -ss !seek -vframes 1 !thumbfile'
         ),
-        
-);
+        'ionCmSynchronization' => array(
+            'cmServiceUrl' => 'http://192.168.242.209/curiositymachine/services/amfphp',
+            'cmUserName' => 'supervisor',
+            'cmPassword' => '!Qwerty123',
+        ),
+    ),
+);  

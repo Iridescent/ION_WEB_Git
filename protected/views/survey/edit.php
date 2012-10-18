@@ -1,6 +1,10 @@
 <?php
+
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.Sort.js');
+
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey.js');
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/BaseQuestion.js');
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/BaseVariantQuestion.js');
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/DropdownQuestion.js');
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/GridQuestion.js');
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/MultipleChoiceQuestion.js');
@@ -8,8 +12,12 @@
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/SingleChoiceQuestion.js');
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/TextAreaQuestion.js');
     Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/TextInputQuestion.js');
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/ImageQuestion.js');
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/VideoQuestion.js');
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/survey/SmileQuestion.js');
     
-    $json_questions = $model->QuestionsToJSON();
+    
+    $json_questions = $model->JsonQuestions;
     
     Yii::app()->clientScript->registerScript('EditSurvey', "
         var json_questions = '" . $json_questions . "';
@@ -19,11 +27,30 @@
             survey.draw();   
             
             $('#saveButton').click(function() {
-                $('#surveyForm').submit();
+                if (survey.validate()) {
+                    $('#JsonQuestions').val(survey.getJSON());
+                    $('#surveyForm').submit();
+                }
             });
             
             $('#bottom_add_button').click(function() {
                 survey.addQuestion();
+            });
+            
+            $(function(){
+                $('.surveyBodyQuestions').sortable({
+                        placeholder: 'surveyQuestion',
+                        zIndex : 9999,
+                        handle: '.sortSurveyQuestion',
+                        stop: function(){
+                            survey.reorderQuestions();
+                            /*var k=0;
+                            $('.surveyBodyQuestions .surveyQuestion').each(function(){
+                                k++;
+                                $(this).attr('id', 'question_' + k);
+                            });*/
+                        }
+                });
             });
         });
     ");
@@ -33,19 +60,21 @@
 
     <?php $form=$this->beginWidget('CActiveForm', array( 'id'=>'surveyForm', 'enableAjaxValidation'=>false,)); ?>
     <?php echo $form->hiddenField($model, 'ID', array('name'=>'surveyId')); ?>
-
+    <?php echo $form->hiddenField($model, 'JsonQuestions', array ('name'=>'JsonQuestions')); ?>
+    
+    <?php echo $form->errorSummary($model); ?>
     <div class="surveyHeader"><!--START [surveyHeader]-->
         <h2><?php echo $this->getAddEditText($model->ID) ?> Survey</h2>
         <div class="row surveyHeaderRow">
             <?php echo $form->labelEx($model, 'Title', array('class'=>'label')); ?>
-            <span class="short-input"><?php echo $form->textField($model, 'Title', array('size'=>25,'maxlength'=>255)); ?></span>
+            <span class="short-input input-width-350"><?php echo $form->textField($model, 'Title', array('size'=>25, 'maxlength'=>50)); ?></span>
             <?php echo $form->error($model, 'Title'); ?>
         </div><!--END [surveyHeaderRow]-->
         <div class="clear"></div>
         <div class="row surveyHeaderRow">
             <?php echo $form->labelEx($model, 'Description', array('class'=>'label')); ?>
             <span class="short-textarea">
-                <?php echo $form->textArea($model, 'Description'); ?>
+                <?php echo $form->textArea($model, 'Description', array('maxlength'=>255)); ?>
             </span>
             <?php echo $form->error($model, 'Description'); ?>
         </div><!--END [surveyHeaderRow]-->
@@ -54,14 +83,14 @@
             <?php $programList = CHtml::listData(QueryProgram::model()->findAll(array('order' => 'Description')), 'ID', 'Description'); ?>
             <label class="label">Program</label>
             <span class="surveyHeaderSelect">                
-                <?php echo CHtml::dropDownList('Survey[ProgramId]', $model->ProgramId, $programList,
+                <?php echo CHtml::dropDownList('ProgramId', $model->ProgramId, $programList,
                     array(
                         'empty' => 'Select a Program:', 
                         'ajax' => array(
                             'type' => 'POST',
                             'url' => CController::createUrl('misc/SessionSelect'),
                             'update'=>'#session_select',
-                            'data'=>array('program_id'=> 'js:$(\'#Survey_ProgramId\').val()', 'input_name'=>'Survey[SessionId]'), 
+                            'data'=>array('program_id'=> 'js:$(\'#ProgramId\').val()', 'input_name'=>'Survey[SessionId]'), 
                         )
                     )
                  ); ?>
@@ -85,10 +114,14 @@
 
     <?php $this->endWidget(); ?>
 
+    <h2 class="surveyBodyQuestionsH2">List of Questions</h2>
     <div class="surveyBodyQuestions"><!--START [surveyBodyQuestions]-->
-        <h2>List of Questions</h2>
     </div><!--END [surveyBodyQuestions]-->
-    <input id="bottom_add_button" type="button" value="Add" />
+    <div class="add-new-question"><!--START [add-new-question]-->
+        <input id="bottom_add_button" type="button" value="" />
+        <span class="label">Add new question</span>
+    </div><!--END [add-new-question]-->
+    
     
     <div class="wrapper-styled-buttons">
         <span class="styled-bttn">
@@ -100,7 +133,3 @@
     </div>
 
 </div><!--END [syrveyCustomForm]-->
-
-<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/surveyQuestions.js"></script>
-
-

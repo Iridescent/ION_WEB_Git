@@ -4,15 +4,22 @@ Yii::app()->clientScript->registerScript('SearchSchools', "
 
 $(document).ready(function(){
     $('#searchButton').click(function(){
-        $.fn.yiiGridView.update('schoolGrid', {
-            data: $(this).serialize()
-        });
-        return false;
+        return Submit();
+    });
+    
+    $('#filter').enterKey(function(){
+        return Submit();
     });
 });
 
-function beforeSchoolGridUpdate(id, options)
-{
+function Submit() {
+    $.fn.yiiGridView.update('schoolGrid', {
+        data: $(this).serialize()
+    });
+    return false;
+}
+
+function beforeSchoolGridUpdate(id, options) {
     options.url += '&filter=' + $('#filter').val();
 }
 

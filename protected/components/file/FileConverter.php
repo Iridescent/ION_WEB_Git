@@ -17,8 +17,9 @@ class FileConverter {
         $thumbnailName = $convertedFileName.'.jpg';
 
         //convert the video to flv
-        $ffmpegCommand = Yii::app()->params['commonMedia']['transcoderPath'].' -forceidx -of lavf -oac mp3lame -lameopts abr:br=56 -srate 22050 -ovc lavc -lavcopts vcodec=flv:vbitrate=250:mbd=2:mv0:trell:v4mv:cbp:last_pred=3 -vf scale='.$fileWidth.':'.$fileHeight.' -o "'.$convertFolder.$convertedFileName.'" "'.$originalFolder.$fileName.'"';  //$ffmpegPath."ffmpeg.exe -y -i \"".$videoPath.$file."\" -s ".$size." -ar ".$bitRate." -r ".$frameRate. " \"".$videoPath.$outfilename."\"";
-
+       // $ffmpegCommand = Yii::app()->params['commonMedia']['transcoderPath'].' -forceidx -of lavf -oac mp3lame -lameopts abr:br=56 -srate 22050 -ovc lavc -lavcopts vcodec=flv:vbitrate=250:mbd=2:mv0:trell:v4mv:cbp:last_pred=3 -vf scale='.$fileWidth.':'.$fileHeight.' -o "'.$convertFolder.$convertedFileName.'" "'.$originalFolder.$fileName.'"';  //$ffmpegPath."ffmpeg.exe -y -i \"".$videoPath.$file."\" -s ".$size." -ar ".$bitRate." -r ".$frameRate. " \"".$videoPath.$outfilename."\"";
+        $ffmpegCommand = Yii::app()->params['commonMedia']['transcoderPath'].' -i "'.$originalFolder.$fileName.'" -s '.$fileWidth.'x'.$fileHeight.' -r 15 -b 250 -ar 22050 -ab 48 "'.$convertFolder.$convertedFileName.'"';
+      
         $result = shell_exec($ffmpegCommand);
         
         // get the thumbnail of file

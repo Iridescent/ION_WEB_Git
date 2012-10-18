@@ -2,51 +2,67 @@
 
 class CuriosityMachineServiceClient {
     
-    private $endpointUrl;
-    private $userName;
-    private $password;
+    const connectAction = "system.connect";
+    const loginAction = "user.login";
+    const logoutAction = "user.logout";
+    const IonGetByIdAction = "user.IonGetById";
+    const IonGetByPersonalInfoAction = "user.IonGetByPersonalInfo";
+    const IonSave = "user.IonSave";
     
-    public function __construct($endpointUrl, $userName, $password){
-        $this->endpointUrl = $endpointUrl;
-        $this->userName = $userName;
-        $this->password = $password;
+    private $amfClient;
+    private $sessionId;
+    public $LoggedIn;
+    
+    public function __construct($endpoint){
+        $this->amfClient = new Zend_Amf_Client($endpoint);
+        $this->LoggedIn = false;
     }
     
-    public function Login(){
-        
+    public function Connect(){
+        $result = $this->amfClient->sendRequest(self::connectAction, array());
+        $this->sessionId = $result->sessid;
+        if ($result->user->userid) {
+            $this->LoggedIn = true;
+        }
+    }
+    
+    public function Login($username, $password){
+        if (!$this->LoggedIn) {
+            $result = $this->amfClient->sendRequest(self::loginAction, $this->params($username, $password));
+            if ($result->sessid && $result->user->userid) {
+                $this->LoggedIn = true;
+                $this->sessionId = $result->sessid;
+            }
+        }
     }
     
     public function Logout(){
-        
+        if ($this->LoggedIn) {
+            $result = $this->amfClient->sendRequest(self::logoutAction, $this->params());
+            $this->LoggedIn = !$result;
+        }
     }
     
     public function GetCMUserById($userId){
-        $user = $this->getFakeUser();
-        return $user;
+        $result = $this->amfClient->sendRequest(self::IonGetByIdAction, $this->params($userId));
+        return $result;
     }
     
     public function GetCMUserByInfo($firstName, $lastName, $birthDate){
-        $user = $this->getFakeUser();
-        return $user;
+        $result = $this->amfClient->sendRequest(self::IonGetByPersonalInfoAction, $this->params($firstName, $lastName, $birthDate));
+        return $result;
     }
     
     public function SaveCMUser($user){
-        $user = $this->getFakeUser();
-        return $user;
-    }
-    
-    private function getFakeUser() {
-        $result = new stdClass();
-        
-        $result->user_id = 1;
-        $result->user_profile_link = 'http://exapmle.com/userprofile?1';
-        $result->user_profile_picture_link = 'http://exapmle.com/sites/default/files/1.jpg';
-        $result->user_points = 123;
-        $result->user_badges = array('http://exapmle.com/sites/default/files/open_badges/badge_1.jpg',
-                                     'http://exapmle.com/sites/default/files/open_badges/badge_1.jpg');
-        $result->user_experiments = array('http://exapmle.com/node/123', 'http://exapmle.com/node/234');
-        
+        $result = $this->amfClient->sendRequest(self::IonSave, $this->params($user));
         return $result;
+    }
+
+    //helpers
+    private function params(){
+        $args = func_get_args();
+        array_unshift($args, $this->sessionId);
+        return $args;
     }
 }
 

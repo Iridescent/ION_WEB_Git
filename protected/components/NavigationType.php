@@ -15,6 +15,7 @@ class NavigationType {
     const TRACKING = "TRACKING";
     const REPORTING = "REPORTING";
     const MANAGE = "MANAGE";
+    const SURVEY_REPLY = "SURVEY_REPLY";
     
     //Second Level
     const REPORTING_PROGRAMS = "REPORTING_PROGRAMS";
@@ -27,6 +28,7 @@ class NavigationType {
     const MANAGE_SITES = "MANAGE_SITES";
     const MANAGE_SCHOOLS = "MANAGE_SCHOOLS";
     const MANAGE_SURVEYS = "MANAGE_SURVEYS";
+    const MANAGE_SYNCHRONIZATION = "MANAGE_SYNCHRONIZATION";
 }
 
 ?>

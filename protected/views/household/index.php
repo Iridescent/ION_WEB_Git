@@ -4,15 +4,22 @@ Yii::app()->clientScript->registerScript('SearchHousehold', "
 
 $(document).ready(function(){
     $('#searchButton').click(function(){
-        $.fn.yiiGridView.update('householdGrid', {
-            data: $(this).serialize()
-        });
-        return false;
+        return Submit();
+    });
+    
+    $('#filter').enterKey(function(){
+        return Submit();
     });
 });
 
-function beforeHouseholdGridUpdate(id, options)
-{
+function Submit() {
+    $.fn.yiiGridView.update('householdGrid', {
+        data: $(this).serialize()
+    });
+    return false;
+}
+
+function beforeHouseholdGridUpdate(id, options) {
     options.url += '&filter=' + $('#filter').val();
 }
 

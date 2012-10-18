@@ -1,45 +1,53 @@
 <?php
 
-class Zend_Amf_Client {
+class Zend_Amf_Client {    
     private $endPoint;
-    private $encoding = 0;
-    
-    private $amfRequest;
-    private $amfResponse;
-    
-    const FLEXMSG = 16;
+    private $encoding = Zend_Amf_Constants::AMF0_OBJECT_ENCODING;
     
     public function __construct($endPoint) {
         $this->endPoint = $endPoint;
-
-        $this->amfRequest = new SabreAMF_Message();
-        $this->amfOutputStream = new Zend_Amf_Parse_OutputStream();
     }
     
     public function sendRequest($servicePath, $data) {
 
-        if($this->encoding & self::FLEXMSG) {
-            // Setting up the message
+        /*if($this->encoding & Zend_Amf_Constants::AMF0_TYPEDOBJECT) {
             $message = new Zend_Amf_Value_Messaging_RemotingMessage();
             $message->body = $data;
-
-            // We need to split serviceName.methodName into separate variables
-            $service = explode('.',$servicePath);
+            $service = explode('.', $servicePath);
             $method = array_pop($service);
-            $service = implode('.',$service);
+            $service = implode('.', $service);
             $message->operation = $method; 
             $message->source = $service;
 
             $data = $message;
-        }
+        }*/
         
-        $this->amfRequest->addBody(array(
-            'target'   => $this->encoding & self::FLEXMSG ? 'null' : $servicePath,
-            'response' => '/1',
-            'data'     => $data
-        ));
+        $amfResponse = new Zend_Amf_Response();
+        $body = new Zend_Amf_Value_MessageBody($servicePath, null, $data);
+        $amfResponse->addAmfBody($body);
+        $rawData = $amfResponse->finalize()->getResponse();
         
-        $this->amfRequest->serialize($this->amfOutputStream);
+        $ch = curl_init($this->endPoint);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/x-amf'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData);
+        /*if ($this->httpProxy) {
+            curl_setopt($ch,CURLOPT_PROXY,$this->httpProxy);
+        }*/
+        
+        $requestStr = curl_exec($ch);
+        curl_close($ch);
+        
+        $request = new Zend_Amf_Request;
+        $request->initialize($requestStr);
+        $result = $request->getAmfBodies();
+        return $result[0]->getData();
+    }
+    
+    public function setEncoding($encoding) {
+        $this->encoding = $encoding;
     }
 }
 

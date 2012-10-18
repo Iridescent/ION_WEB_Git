@@ -1,4 +1,9 @@
+function getPaddingToImg (){
+    $('.corner-8-top a').find('img').parent().css({'display':'inline-block'});
+    $('#householdGrid .corner-8-top a:last-child').css({'padding-left': '25px'});
+}
 $(document).ready(function(){
+    getPaddingToImg();
 	
 	$('textarea').css({
 		'-moz-user-select': 'text',

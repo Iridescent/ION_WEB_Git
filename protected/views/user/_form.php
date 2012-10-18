@@ -15,11 +15,11 @@ var selectedCityDiv;
 
 var countryCheckboxSelector = 'div#countries_list>div>input:checkbox';
 var stateCheckboxSelector = 'div#states_list>div>input:checkbox';
-var cityCheckboxSelector = 'div#cities_list>div>input:checkbox';
+var cityCheckboxSelector = 'div#cities_list div>input:checkbox';
 
 var countryLabelSelector = 'div#countries_list>div>label';
 var stateLabelSelector = 'div#states_list>div>label';
-var cityLabelSelector = 'div#cities_list>div>label';
+var cityLabelSelector = 'div#cities_list div>label';
 
 var selectedClass = 'selectedLocation';
 
@@ -44,7 +44,7 @@ $(document).ready(function(){
     
     SelectItemDiv(selectedCountryDiv, true);
     SelectItemDiv(selectedStateDiv, true);
-    SelectItemDiv(selectedCityDiv, true);
+    //SelectItemDiv(selectedCityDiv, true);
        
     InitCountryList();
     InitStateList();
@@ -88,23 +88,41 @@ function InitCountryList(){
 
 function InitStateList(){
     $(stateLabelSelector).click(function(){
+        $('.gif-animation-wrapper').show();
         selectedStateId = parseInt($(this).attr('for'));
         if (selectedStateId){
             SelectItemDiv(selectedStateDiv, false);
             selectedStateDiv = $(this).parent();
             SelectItemDiv(selectedStateDiv, true);
             
+            
             $.ajax({
                 type: 'POST',
                 url: '".CController::createUrl('site/CitiesByState')."',
                 datatype: 'json',
-                traditional: true,
+                traditional: false,
                 data: {stateid: selectedStateId},
+                complete: function(data){
+                   
+                },
                 success: function(data) {
                     if (data){
-                       cityList.empty();
-                       cityList.append(data);
+                       /*var nameElem = 'cities_list';
+                       var holder = document.getElementById(nameElem);//
+                       while(holder.hasChildNodes()){
+                            holder.removeChild(holder.lastChild);
+                        }
+                       $('#cities_list').append('<span></span>');
+                       $('#cities_list span').after(data);
+                       InitCityList();*/
+
+                       $('#cities_list').empty();
+                       var myElem = $('<div>');
+                       myElem.html(data);
+                       $('#cities_list').html(myElem);
                        InitCityList();
+
+                       $('.gif-animation-wrapper').hide();
                     }
                 }
             });
@@ -117,18 +135,20 @@ function InitStateList(){
 }
 
 function InitCityList(){
-    $(cityLabelSelector).click(function(){
-        selectedCityId = parseInt($(this).attr('for'));
-        if (selectedCityId){
-            SelectItemDiv(selectedCityDiv, false);
-            selectedCityDiv = $(this).parent();
-            SelectItemDiv(selectedCityDiv, true);
-        }
-    });
+    // $(cityLabelSelector).click(function(){
+    //     selectedCityId = parseInt($(this).attr('for'));
+    //     if (selectedCityId){
+    //         SelectItemDiv(selectedCityDiv, false);
+    //         selectedCityDiv = $(this).parent();
+    //         SelectItemDiv(selectedCityDiv, true);
+    //     }
+    // });
     $(cityCheckboxSelector).click(OnCityChecked);
     
     cityCount = $(cityCheckboxSelector).length - 1;
     RefreshCityList();
+    
+    //console.log($('#cities_list label').length);
 }
 
 function CheckAll(container){
@@ -526,7 +546,7 @@ function SelectItemDiv(itemDiv, direction){
                 $citiesList = Locations::selectCities($stateId);
 
                 echo '<div class="left countries-list-wrapper">';
-                echo CHtml::label('Country', 'countries', array('class'=>'label'));
+                echo '<label class="label">Country <span class="required">*</span></label>';
                 echo '<div id="countries_list">';
                 echo VisualHelper::CheckBoxList($countriesList, $defaultCountry, 'countries', true);
                 echo '<div class="clear"></div>';
@@ -535,7 +555,7 @@ function SelectItemDiv(itemDiv, direction){
                 echo '<div class="clear"></div>';
 
                 echo '<div class="left state-list-wrapper">';
-                echo CHtml::label('State', 'states', array('class'=>'label'));
+                echo '<label class="label">State <span class="required">*</span></label>';
                 echo '<div id="states_list" >';
                 echo VisualHelper::CheckBoxList($statesList, $countryId, 'states', true);
                 echo '</div>';
@@ -544,7 +564,7 @@ function SelectItemDiv(itemDiv, direction){
                 echo '<div class="clear"></div>';
 
                 echo '<div class="left city-list-wrapper">';
-                echo CHtml::label('City', 'cities', array('class'=>'label'));
+                echo '<label class="label">City <span class="required">*</span></label>';
                 echo '<div id="cities_list">';            
                 echo VisualHelper::CheckBoxList($citiesList, $stateId, 'cities', true);
                 echo '</div>';

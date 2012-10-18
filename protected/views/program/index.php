@@ -4,12 +4,20 @@ Yii::app()->clientScript->registerScript('SearchProgram', "
 
 $(document).ready(function(){
     $('#searchButton').click(function(){
-        $.fn.yiiGridView.update('programGrid', {
-            data: $(this).serialize()
-        });
-        return false;
+        return Submit();
+    });
+    
+    $('#DescriptionOrType').enterKey(function(){
+        return Submit();
     });
 });
+
+function Submit() {
+    $.fn.yiiGridView.update('programGrid', {
+        data: $(this).serialize()
+    });
+    return false;
+}
 
 function beforeProgramGridUpdate(id, options)
 {
@@ -34,6 +42,7 @@ function beforeProgramGridUpdate(id, options)
         'ajaxVar'=>true,
         'ajaxUpdate'=>true,
         'beforeAjaxUpdate'=>'beforeProgramGridUpdate',
+        'afterAjaxUpdate'=>'getPaddingToImg',
         'template'=>'{items}{pager}{summary}',
         'title'=>'Programs',
         'addActionUrl'=>$this->createUrl('edit'),

@@ -46,7 +46,7 @@ class HomeController extends Controller {
             $this->redirectToHome();
             return;
         }
-        Yii::log($error);
+        Yii::log($error, CLogger::LEVEL_ERROR);
         $this->render('error');
     }
 }

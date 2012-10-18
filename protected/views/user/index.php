@@ -4,15 +4,22 @@ Yii::app()->clientScript->registerScript('SearchUser', "
 
 $(document).ready(function(){
     $('#searchButton').click(function(){
-        $.fn.yiiGridView.update('userGrid', {
-            data: $(this).serialize()
-        });
-        return false;
+        return Submit();
+    });
+    
+    $('#filter').enterKey(function(){
+        return Submit();
     });
 });
 
-function beforeUserGridUpdate(id, options)
-{
+function Submit(){
+    $.fn.yiiGridView.update('userGrid', {
+        data: $(this).serialize()
+    });
+    return false;
+}
+
+function beforeUserGridUpdate(id, options) {
     options.url += '&filter=' + $('#filter').val();
 }
 

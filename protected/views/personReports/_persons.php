@@ -44,6 +44,7 @@ function beforePersonsGridUpdate(id, options)
         'deleteHiddenFormId' => 'deleteEntityIdHiddenSearch',
         //'editActionHandler' => 'return false;',
         //'addActionHandler' => 'return false;',
+        'afterAjaxUpdate' => 'addClassEditEntityButton160',
         'addButtonVisible' => false,
         'editButtonVisible' => true,
         'deleteButtonVisible'=>false,

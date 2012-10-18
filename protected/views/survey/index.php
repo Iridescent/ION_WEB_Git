@@ -18,6 +18,11 @@
     'columns'=>array(
         'Title',
         array(
+               'name' => 'Program',
+               'header'=>'Program',
+               'value'=>'$data->ProgramRelation->Description'
+             ),
+        array(
                'name' => 'Session',
                'header'=>'Session',
                'value'=>'$data->SessionRelation->Description'

@@ -49,7 +49,7 @@ class DomainSession extends BaseModel {
     public function rules(){
         return array(
             array('Description', 'length', 'max'=>255),
-            //array('StartDate', 'application.extensions.Validators.ClientDateTimeValidator'),
+            //array('StartDate', 'application.extensions.Validators.ClientDateTime'),
             array('StartDate, StartTime, Instructors, Notes, NonSchoolSite, SchoolSite, CourseManager, UserManager', 'safe'),
         );
     }

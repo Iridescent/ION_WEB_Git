@@ -21,7 +21,7 @@ class KeyTagGridView extends CGridView{
     public $titleCssClass="gridTitle";
     
     /* Button set */
-    public $actionButtons=array("import", "add", "edit", "delete");
+    public $actionButtons=array("import", "add", "edit", "delete", "export");
     
     /* Add button text */
     public $addButtonText="Add";
@@ -34,6 +34,9 @@ class KeyTagGridView extends CGridView{
     
     /*Import button text */
     public $importButtonText = "Import";
+
+    /*Export button text */
+    public $exportButtonText = "Export";
     
     /* Call action when Add button click */
     public $addActionUrl="";
@@ -43,6 +46,9 @@ class KeyTagGridView extends CGridView{
     
     /* Call action when Delete button click */
     public $deleteActionUrl="";
+
+    /* Call action when Export button click */
+    public $exportActionUrl="";
     
     /* If specified it is used as Add button handler */
     public $addActionHandler="";
@@ -52,6 +58,9 @@ class KeyTagGridView extends CGridView{
     
     /*Import button text */
     public $importActionHandler="";
+
+    /*Export button text */
+    public $exportActionHandler="";
     
     /* Add button visibility */
     public $addButtonVisible=true;
@@ -64,6 +73,9 @@ class KeyTagGridView extends CGridView{
     
     /*Import button text */
     public $importButtonVisisble=false;
+
+    /*Export button text */
+    public $exportButtonVisisble=false;
     
     /* Action Method: POST or GET */
     public $actionMethod="POST";
@@ -82,15 +94,21 @@ class KeyTagGridView extends CGridView{
     
      /* Name of Id for delete entity */
     public $deleteFormId = "deleteEntityForm";
+
+     /* Name of Id for export entity */
+    public $exportFormId = "exportEntityForm";
     
-        /* Name of Id for hidden input to add */
+    /* Name of Id for hidden input to add */
     public $addHiddenFormId = "addEntityIdHidden";
     
-     /* Name of Id for hidden input to edit */
+    /* Name of Id for hidden input to edit */
     public $editHiddenFormId = "editEntityIdHidden";
     
-     /* Name of Id for hidden input to delete */
+    /* Name of Id for hidden input to delete */
     public $deleteHiddenFormId = "deleteEntityIdHidden";
+
+    /* Name of Id for hidden input to export */
+    public $exportHiddenFormId = "exportEntityIdHidden";
     
     /* Delete javascript for some exception*/
     public $deleteButtonSpecJavascript = false;
@@ -150,6 +168,10 @@ class KeyTagGridView extends CGridView{
         echo "<form id='".$this->deleteFormId."' style='display: none;' action='" .$this->deleteActionUrl . "' method='" . $this->actionMethod . "' >";
         echo "<input type='hidden' id='".$this->deleteHiddenFormId."' name='" . $this->idParameterName . "' />";
         echo "</form>";
+
+        //form Export
+        echo "<form id='".$this->exportFormId."' style='display: none;' action='" .$this->exportActionUrl . "' method='" . $this->actionMethod . "' target='_blank' >";
+        echo "</form>";
         
         echo "</div>";
          
@@ -158,7 +180,7 @@ class KeyTagGridView extends CGridView{
     
     public function registerClientScript(){        
         $actionButtonsScript = "var keyTagGridView = new KeyTagGridView('".$this->addFormId."', '".$this->editFormId."',".
-                               " '".$this->deleteFormId."', '".$this->editHiddenFormId."', '".$this->deleteHiddenFormId."', '" .$this->deleteConfirmation. "');";
+                               " '".$this->deleteFormId."', '".$this->editHiddenFormId."', '".$this->deleteHiddenFormId."', '" .$this->deleteConfirmation. "', '".$this->exportFormId."');";
         $cs=Yii::app()->getClientScript();
         $cs->registerScriptFile(Yii::app()->baseUrl.'/js/KeyTagGridView.js');
         $cs->registerScript("ActionButtonsScript", $actionButtonsScript, CClientScript::POS_HEAD);
@@ -182,6 +204,10 @@ class KeyTagGridView extends CGridView{
             case "import":{
                 return $this->importButtonText;
             }
+
+            case "export":{
+                return $this->exportButtonText;
+            }
         }
     }
     
@@ -201,6 +227,10 @@ class KeyTagGridView extends CGridView{
             
             case "import":{
                 return "importButton";
+            }
+
+            case "export":{
+                return "exportButton";
             }
         }
     }
@@ -222,6 +252,10 @@ class KeyTagGridView extends CGridView{
             case "import":{
                 return $this->importButtonVisisble;
             }
+
+            case "export":{
+                return $this->exportButtonVisisble;
+            }
         }
     }
     
@@ -242,6 +276,10 @@ class KeyTagGridView extends CGridView{
             case "import":{
                 return $this->importActionHandler != "" ? $this->importActionHandler : "";
             }
+
+            case "export":{
+                return $this->exportActionHandler != "" ? $this->exportActionHandler : "keyTagGridView.exportEntity()";
+            }
         }
     }
     
@@ -260,6 +298,10 @@ class KeyTagGridView extends CGridView{
             }
             
             case "import":{
+                return "images/import-icon.png";
+            }
+
+            case "export":{
                 return "images/import-icon.png";
             }
         }

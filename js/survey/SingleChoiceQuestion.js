@@ -1,15 +1,8 @@
-function SingleChoiceQuestion(id, title, required, listOfItems) {
-    SingleChoiceQuestion.superClass.apply(this, [id, QuestionType.SINGLE_CHOICE, title, required]);
+function SingleChoiceQuestion(id, title, required, variants) {
+    SingleChoiceQuestion.superClass.apply(this, [id, QuestionType.SINGLE_CHOICE, title, required, variants]);
     
     this.getEditHtml = function() {
-        var questionTypeSingleChoiceTitle = '<label>Question title</label>';
-        var questionTypeSingleChoiceTitleValue = '<span class="short-input"><input type="text" class="surveyStaticTitle" value="' 
-            + this.title 
-            + '"></span>';
-        var questionTypeSingleChoiceTitleRow = '<div class="surveyQuestionRow">' 
-            + questionTypeSingleChoiceTitle 
-            + questionTypeSingleChoiceTitleValue 
-            + '</div><div class="clear" />'; 
+        var questionTypeSingleChoiceTitleRow = this.getQuestionTitle(); 
         
         var questionTypeSingleChoiceDropdownTitle = '<label>Question type</label>';
         var questionTypeSingleChoiceDropdownTitleValue = this.getQuestionTypeDropdown();
@@ -20,7 +13,7 @@ function SingleChoiceQuestion(id, title, required, listOfItems) {
         
         var questionTypeSingleChoiceAnswer = '<label>Example of answer</label>';
         var addNewLine = '<a href="#" onclick="addNewLine.call($(this)); return false;" class="multipleChoiceAddNewLine">Add new line</a>';
-        var addOtherLine = '<a href="#" onclick="addAnotherLine.call($(this)); return false;" class="multipleChoiceAddOther">Add other</a>';
+        var addOtherLine = '';// temporary commented '<a href="#" onclick="addAnotherLine.call($(this)); return false;" class="multipleChoiceAddOther">Add other</a>';
         var questionTypeSingleChoiceAnswerValue = '<div class="exampleQuestionAnswer">' 
             + this.questionTypeSingleChoiceAnswerValueEdit() 
             + addNewLine 
@@ -76,7 +69,7 @@ function SingleChoiceQuestion(id, title, required, listOfItems) {
         for (var i=0; i<answerLenfth; i++){
             var answerItem = '<li>'
             + '<input class="short-input-multiple-checkbox" type="radio" name="TypeSingleChoice" />'
-            + '<span class="short-input short-input-multiple"><input type="text" readonly="readonly" value='+ answerValues[i] +' /></span>'
+            + '<span class="short-input short-input-multiple SingleChoiceInput"><input type="text" readonly="readonly" value="'+ answerValues[i].title +'" /></span>'
             + '</li>';
             answerItems += answerItem;
         }
@@ -91,7 +84,8 @@ function SingleChoiceQuestion(id, title, required, listOfItems) {
         for (var i=0; i<answerLenfth; i++){
             var answerItem = '<li class="multipleChoiceLi">'
             + '<input class="short-input-multiple-checkbox" type="radio" name="TypeSingleChoice" />'
-            + '<span class="short-input short-input-multiple"><input type="text" value='+ answerValues[i] +' /></span>'
+            + '<span class="short-input short-input-multiple SingleChoiceInputEdit"><input type="text"'
+            + ' value="'+ answerValues[i].title +'" name="Variants" ' + this.getOptionMaxLength() + ' /></span>'
             + '<a href="#" onclick="removeSingleLine.call($(this)); return false;" class="removeMultipleChoiceLine"></a>'
             + '</li>';
             answerItems += answerItem;
@@ -103,21 +97,5 @@ function SingleChoiceQuestion(id, title, required, listOfItems) {
     this.getViewHtml = function() {
         //TODO implement
     };
-    
-    this.flush = function () {};
-    
-    this.reorderVariants = function() {
-        for (var i=0; i<this.variants.length; i++) {
-            this.variants[i].weight = i+1;
-        }
-    }
-    
-    this.onVariantRemove = function () {
-        //TODO remove variant by weight
-        this.reorderVariants();
-    }
-    
-    this.variants = listOfItems;
-    //this.variants = [ {title: "Fair", weight: 1} ]; weight from 
 }
-SingleChoiceQuestion.inheritsFrom(BaseQuestion);
+SingleChoiceQuestion.inheritsFrom(BaseVariantQuestion);

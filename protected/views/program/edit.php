@@ -230,7 +230,7 @@ Yii::app()->clientScript->registerScript('EditProgram', "
         if (!$('#DomainProgram_StartDate').val() || !$('#DomainProgram_EndDate').val()){
             valid = false;
             $('#errorProgramLabel').text('Please select Start and End Date');
-			$('#errorProgramLabel').parent().css('display','block');
+            $('#errorProgramLabel').parent().css('display','block');
         }
         else{
             var startDate = new Date($('#DomainProgram_StartDate').val());
@@ -238,7 +238,7 @@ Yii::app()->clientScript->registerScript('EditProgram', "
             if (endDate <= startDate){
                 valid = false;
                 $('#errorProgramLabel').text('End Date must be greater then Start Date');
-				$('#errorProgramLabel').parent().css('display','block');
+                $('#errorProgramLabel').parent().css('display','block');
             }
         }
         return valid;
@@ -261,6 +261,7 @@ Yii::app()->clientScript->registerScript('EditProgram', "
         'id'=>'programForm',
         'enableAjaxValidation'=>false,
     )); ?>
+    <?php echo $form->errorSummary($model); ?>
     <?php echo $form->hiddenField($model, 'ID', array('name'=>'programId')); ?>
     <div class="form-left-column styled-form">
         <h2><?php echo $this->getAddEditText($model->ID) ?> Program</h2>
@@ -316,7 +317,7 @@ Yii::app()->clientScript->registerScript('EditProgram', "
 
             <?php echo $form->labelEx($model, 'ProgramType', array('class'=>'label left-20 label-115')); ?>
             <?php $programTypeList = CHtml::listData(ProgramType::model()->findAll(array('order' => 'Name')), 'ID', 'Name'); ?>
-            <span class="short-input-select short-input-select-225 right right-20"><?php echo $form->dropDownList($model, 'ProgramType', $programTypeList); ?></span>
+            <span class="short-input-select short-input-select-225 programs-program-type-input right right-20"><?php echo $form->dropDownList($model, 'ProgramType', $programTypeList); ?></span>
         </div>
         <div class="row">
             <?php echo $form->labelEx($model, 'PicasaLink', array('class'=>'label')); ?>
@@ -345,7 +346,7 @@ Yii::app()->clientScript->registerScript('EditProgram', "
 <div class="grid-styled-wrapper edit-grid-wrapper">
 
     <div class="gridTitle">
-    	<h2>Sessions</h2>
+    	<h2>Sessions<span class="required">*</span></h2>
     	<div class="controlls">
 	        <?php echo "<button class='add-edit-delete-bttn' id='addSessionButton'>"."<img src='images/add-icon.png' alt='' />"."<span>".'Add'."</span>"."</button>"; ?>
 	        <?php echo "<button class='add-edit-delete-bttn' id='editSessionButton'>"."<img src='images/edit-icon.png' alt='' />"."<span>".'Edit'."</span>"."</button>"; ?>
@@ -383,14 +384,14 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
     <h2><label id="sessionTitle" /></h2>
 	
     <div class="row">
-    	<?php echo CHtml::label('Description', '', array('class'=>'label')) ?>
+        <label class="label">Description <span class="required">*</span></label>
        	<span class="long-input-545"><?php echo CHtml::textField('Description', '') ?></span>
     </div>
     <div class="clear"></div>
     
     <div class="row">
-            <?php echo CHtml::label('Date', '', array('class'=>'label')) ?>
-            <span class="short-input-calendar">
+        <label class="label">Date <span class="required">*</span></label>
+        <span class="short-input-calendar">
             <?php 
             $this->widget('zii.widgets.jui.CJuiDatePicker',
                     array(
@@ -409,12 +410,12 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                             'htmlOptions' => array('style' => 'width: 182px;'),
                 ));
             ?>
-            </span>
+        </span>
 
-            <?php echo CHtml::label('Time', '', array('class'=>'label left-25')) ?>
-            <span class="short-input-calendar">
+        <?php echo CHtml::label('Time', '', array('class'=>'label left-25')) ?>
+        <span class="short-input-calendar">
             <input type="text" id="StartTime" />
-            </span>
+        </span>
     </div>
     <div class="clear"></div>
     

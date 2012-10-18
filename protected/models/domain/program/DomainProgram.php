@@ -32,18 +32,22 @@ class DomainProgram extends BaseModel {
             'EndDate' => 'End',
             'ProgramType' => 'Type',
             'PicasaLink' => "<img class='header-image' src='images/logo_picasa.png' alt='Picasa' /> Album",
-            "GDocLink" => "<img class='header-image' src='images/logo_gdoc.png' alt='GoogleDoc Link' /> Attendance",
-            "GDocExtra" => "<img class='header-image' src='images/logo_gdoc.png' alt='GoogleDoc Link' /> Extra info",
-            "GDocLog" => "<img class='header-image' src='images/logo_gdoc.png' alt='GoogleDoc Link' /> Call Log",
-            "BasecampLink" => "<img class='header-image' src='images/logo_basecamp.png' alt='' /> Basecamp",
+            'GDocLink' => "<img class='header-image' src='images/logo_gdoc.png' alt='GoogleDoc Link' /> Attendance",
+            'GDocExtra' => "<img class='header-image' src='images/logo_gdoc.png' alt='GoogleDoc Link' /> Extra info",
+            'GDocLog' => "<img class='header-image' src='images/logo_gdoc.png' alt='GoogleDoc Link' /> Call Log",
+            'BasecampLink' => "<img class='header-image' src='images/logo_basecamp.png' alt='' /> Basecamp",
         );
     }
     
     public function rules(){
         return array(
+            array('Description, StartDate, EndDate, ProgramType', 'required'),
             array('Description, PicasaLink, GDocLink, GDocExtra, GDocLog, BasecampLink', 'length', 'max'=>255),
-            array('StartDate, EndDate', 'application.extensions.Validators.ClientDateTimeValidator'),
+            array('StartDate, EndDate', 'application.extensions.Validators.ClientDateTime'),
             array('StartDate, EndDate, ProgramType', 'safe'),
+            array('PicasaLink', 'application.extensions.Validators.Link', 'type' => LinkType::GOOGLE_PICASA),
+            array('GDocLink, GDocExtra, GDocLog', 'application.extensions.Validators.Link', 'type' => LinkType::GOOGLE_DOCS),
+            array('BasecampLink', 'application.extensions.Validators.Link', 'type' => LinkType::BASE_CAMP),
         );
     }
     

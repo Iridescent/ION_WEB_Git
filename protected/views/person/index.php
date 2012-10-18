@@ -4,15 +4,22 @@ Yii::app()->clientScript->registerScript('SearchPerson', "
 
 $(document).ready(function(){
     $('#searchButton').click(function(){
-        $.fn.yiiGridView.update('personsGrid', {
-            data: $(this).serialize()
-        });
-        return false;
+        return Submit();
+    });
+    
+    $('#filter').enterKey(function(){
+        return Submit();
     });
 });
 
-function beforePersonsGridUpdate(id, options)
-{
+function Submit() {
+    $.fn.yiiGridView.update('personsGrid', {
+        data: $(this).serialize()
+    });
+    return false;
+}
+
+function beforePersonsGridUpdate(id, options) {
     options.url += '&filter=' + $('#filter').val();
 }
 
@@ -33,12 +40,15 @@ function beforePersonsGridUpdate(id, options)
         'ajaxVar'=>true,
         'ajaxUpdate'=>true,
         'beforeAjaxUpdate'=>'beforePersonsGridUpdate',
+        'afterAjaxUpdate'=>'getPaddingToImg',
         'template'=>'{items}{pager}{summary}',
         'title'=>'Participants',
         'addActionUrl'=>$this->createUrl('edit'),
         'editActionUrl'=>$this->createUrl('edit'),
         'deleteActionUrl'=>$this->createUrl('delete'),
         'deleteButtonVisible'=>Yii::app()->user->checkAccess(UserRoles::SuperAdmin),
+        'exportButtonVisisble'=>true,
+        'exportActionUrl'=>$this->createUrl('export'),
         'idParameterName'=>'personId',
         'columns'=>array(
             'BarcodeID',

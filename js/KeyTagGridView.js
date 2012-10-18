@@ -1,4 +1,4 @@
-function KeyTagGridView(addEntityFormId, editEntityFormId, deleteEntityFormId, editEntityHiddenId, deleteEntityHiddenId, deleteConfirmation) {
+function KeyTagGridView(addEntityFormId, editEntityFormId, deleteEntityFormId, editEntityHiddenId, deleteEntityHiddenId, deleteConfirmation, exportEntityFormId) {
     this.selectedEntityId = [];
     
     this.addEntityFormId = addEntityFormId;
@@ -7,6 +7,7 @@ function KeyTagGridView(addEntityFormId, editEntityFormId, deleteEntityFormId, e
     this.editEntityHiddenId = editEntityHiddenId;
     this.deleteEntityHiddenId = deleteEntityHiddenId;
     this.deleteConfirmation = deleteConfirmation;
+    this.exportEntityFormId = exportEntityFormId;
        
     this.addEntity = function(){
         $('#'+this.addEntityFormId).submit();
@@ -30,6 +31,10 @@ function KeyTagGridView(addEntityFormId, editEntityFormId, deleteEntityFormId, e
     
     this.selectionChanged = function(id){
         this.selectedEntityId = $.fn.yiiGridView.getSelection(id);
+    }
+
+    this.exportEntity = function(){
+        $('#'+this.exportEntityFormId).submit();
     }
 }
 

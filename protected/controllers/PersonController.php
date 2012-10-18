@@ -25,6 +25,16 @@ class PersonController extends BaseManageController {
                 
         if(isset($_POST['Person'])){ 
             $model->attributes=$_POST['Person'];
+            //temp
+            if (!$model->GradeLevel || $model->GradeLevel == ''){
+                $model->GradeLevel = NULL;
+            }
+            if (!$model->School || $model->School == ''){
+                $model->School = NULL;
+            }
+            if (!$model->Subtype || $model->Subtype == ''){
+                $model->Subtype = NULL;
+            }
          
             // Household releted Person
             if (isset($householdId)) {
@@ -120,7 +130,7 @@ class PersonController extends BaseManageController {
       $data = $command->queryAll(true);;
       $data = CHtml::listData($data,'ID','Name');
 
-      $data = ReportsController::unionArrays(array("_all" => "Select a relationship:") , $data);
+      $data = ReportsController::unionArrays(array("" => "Select a relationship:") , $data);
       //print_r($data); die();
       foreach($data as $value=>$name)
       {
@@ -128,7 +138,71 @@ class PersonController extends BaseManageController {
         array('value'=>$value),CHtml::encode($name),true);
       }
     }
-   
+
+    public function actionExport() {
+        // TODO: 
+        // - User name and passwd -> config
+        // - Refactoring
+        // - Message
+
+        $email    = 'datairidescent@gmail.com'; # GMail or Google Apps account
+        $password = 'S2SekX8Xf7ux';
+        $fileName = 'household_'.date('mdY_His').'.csv';
+        $fileContentType = 'text/csv';
+        // $folder = 'https://docs.google.com/feeds/default/private/full/folder%3Aroot/contents'; // root folder
+        $folder = 'https://docs.google.com/feeds/default/private/full/folder%3A0B5QTBluXc1jWRUVWWF9zeERXMDQ/contents';
+        $delimiter = ',';
+        
+        Yii::import('ext.googlelogin');
+        Yii::import('ext.xhttp');
+
+        $model=new QueryPerson();
+        $model->unsetAttributes();
+
+        Yii::import('ext.ECSVExport');
+ 
+        $res = Yii::app()->db->createCommand()
+                ->select('p.BarcodeID AS Barcode, p.FirstName AS First name, p.LastName AS Last name, h.Name AS Household, p.WorkPhone as Work phone, p.EmailAddress AS Email, t.Name AS Role')
+                ->from('persons p')
+                ->leftJoin('household h', 'p.Household=h.ID')
+                ->leftJoin('persontype t', 'p.Type=t.ID');
+                //->order('ISNULL(h.Name), h.Name ASC');
+
+        $csv = new ECSVExport($res);
+
+        //$csv = new ECSVExport($model->search());
+        //$csv->setHeader('Name', 'Household');
+        //$csv->setExclude(array('ID', 'Sex', 'GradeLevel', 'Type', 'Subtype', 'School', 'DateOfBirth', 'WorkPhone', 'MobilePhone', 'HomePhone', 'Notes', 'SpecialCircumstances','PhysicianName','PhysicianPhoneNumber','Allergies','Medications','InsuranceCarrier','InsuranceNumber','LastUpdated','UpdateUserId','PicasaLink','GDocSurvey','GDocApplication'));
+
+        $outputCsv = $csv->toCSV(); 
+
+        $login = new googlelogin($email, $password, googlelogin::documents);
+
+        $data['headers'] = array(
+            'Authorization' => $login->toAuthorizationheader(),
+            'GData-Version' => '3.0',
+            'Slug' => rawurlencode($fileName),
+            'Content-Type' => $fileContentType ,
+        );
+
+        $data['post'] = $outputCsv;
+
+        $uploadresponse = xhttp::fetch($folder, $data);
+        $message = 'Check file "'.$fileName.'" in export folder.';
+
+        if($uploadresponse['successful']) {
+            $xmlFilesInfo = new SimpleXMLElement($uploadresponse['body']);
+
+            foreach ($xmlFilesInfo->link as $link) {
+                if( ($link['type'] == 'text/html') && ($link['rel'] == 'alternate') ) {
+                    $this->redirect($link['href']);
+                }
+            }
+        }
+
+        echo $message;
+        die;
+    }
     
     private function updateHousehold(&$personModel){
         $household = Household::model()->updateByPk($personModel->Household, array(

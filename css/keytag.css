@@ -158,7 +158,7 @@ div.form .errorMessage { font-size: 11px !important;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    padding: 5px;}
+    padding: 5px; }
 .city-list-wrapper #cities_list:hover,
 .city-list-wrapper #cities_list:focus {
     border:1px solid #638caa;
@@ -211,7 +211,34 @@ div.form .errorMessage { font-size: 11px !important;
 /*============================WRAPPER CONTAINER===============================*/
 #wrapper-container{
     margin: 0 auto;
-    width: 1020px;}
+    width: 1020px;
+    padding-bottom: 120px;
+    position: relative;}
+#keytag-footer { position: absolute;
+    bottom: 0px;
+    height: 70px;
+    padding: 10px 0px;
+    left: 10px;
+    width: 1000px;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
+    -webkit-box-shadow: 0px 0px 3px 1px #515151;
+    box-shadow: 0px 0px 3px 1px #515151;
+    border: 1px solid #515151;
+    border-bottom: 0px solid #515151;}
+#keytag-footer p {margin: 0px;
+    padding: 8px 5px 0px 10px;
+    color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 15px;
+    width: 500px;
+    float: left;}
+#keytag-footer .icon-footer {float: right;
+    margin-right: 10px;}
+#keytag-footer p b {font-weight: bold;}
 
 /*===========================TOP MENU=========================================*/
 #wrapper-container ul.top-tab-menu { height: 100px;
@@ -353,6 +380,7 @@ div.form .errorMessage { font-size: 11px !important;
 	font-size: 20px !important;
 	text-transform: none !important;}
 #login-content .errorMessage { margin-top: -10px !important;}
+span.required {color: #ff0000;}
 #login-content span.required { display: none !important;}
 .gridSelectedRow td {background:#6abbf1 !important;
 	color: #fff !important;}
@@ -364,7 +392,9 @@ div.form .errorMessage { font-size: 11px !important;
 /*===========================STYLED GRID===================================*/
 .grid-view table.items th { vertical-align: bottom;}
 .grid-view table.items th a.desc,
-.grid-view table.items th a.asc {background-position: right 11px !important;}
+.grid-view table.items th a.asc {background-position: right 8px !important;}
+.grid-view table.items th, .grid-view table.items td {max-width: 500px;
+    word-wrap: break-word;}
 .grid-styled-wrapper {overflow:hidden;
 	margin:0 auto;
 	-webkit-border-radius: 10px;
@@ -399,6 +429,13 @@ div.form .errorMessage { font-size: 11px !important;
 	font-style:normal;
 	font-weight:normal;
 	background:#aeaeae;}
+.corner-8-top a { position: relative;
+    min-height: 21px;
+    min-width: 21px;
+    text-align: center;}
+#householdGrid .corner-8-top a:last-child {padding-left: 25px;}
+.corner-8-top a img { position: absolute;
+    left: 0px;}
 .grid-styled-wrapper table {}
 .grid-styled-wrapper thead {background:none !important;}
 .grid-styled-wrapper thead th { background: #505050 !important;
@@ -467,6 +504,7 @@ div.form .errorMessage { font-size: 11px !important;
 .grid-styled-wrapper table.items .header-image{
     height: 21px;
 }
+#householdGrid table.items tr td:last-child {text-align: center !important;}
 
 /*=============================LONG INPUT===================================*/
 .long-input { width: 550px;
@@ -1324,7 +1362,7 @@ ul.ui-autocomplete a.ui-state-hover {background:#CDD8E4 !important;
     box-shadow: 0 0 8px rgba(0,0,0,0.5);
     margin-top:8px;
     margin-bottom: 8px;
-    min-height: 358px;}
+    min-height: 420px;}
 .right-part-tabs .single-left-tab {
 	min-height: 400px;}
 	
@@ -1347,6 +1385,7 @@ ul.ui-autocomplete a.ui-state-hover {background:#CDD8E4 !important;
 	position: relative;
 	float: left;
 	margin-top: 20px;}
+.reports-programs-page .toggle-reports-advanced .multi-select {display: none;}
 .reports-programs-page .toggle-reports-advanced .open-close-block { width: auto;
 	height: 20px;
 	background: #fff;
@@ -2142,7 +2181,7 @@ Upload pop-up
 #syrveyCustomForm .surveyHeader .surveyHeaderRow .surveyHeaderSelect select option { padding-left:5px;}
 
 #syrveyCustomForm .surveyBodyQuestions {}
-#syrveyCustomForm .surveyBodyQuestions h2 {color: #515151;
+#syrveyCustomForm h2.surveyBodyQuestionsH2 {color: #515151;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 20px;
     line-height: 22px;
@@ -2153,7 +2192,8 @@ Upload pop-up
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion {position: relative;
     margin-bottom: 5px;
     padding-bottom: 5px;
-    border-bottom: 1px dashed #515151;}
+    border-bottom: 1px dashed #515151;
+    min-height: 65px;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion:first-child {margin-top: 5px;
     padding-top: 5px;
     margin-bottom: 5px;
@@ -2181,16 +2221,18 @@ Upload pop-up
     width: 155px;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyQuestionRow .short-input {margin-left: 5px;
     margin-right: 5px;}
-#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyQuestionRow .surveyStaticTitleText {margin-left: 5px;
-    margin-right: 5px;
-    color: #515151;
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyQuestionRow .surveyStaticTitleText {color: #515151;
     float: left;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: bold;
-    line-height: 25px;
-    width: 300px;}
+    line-height: 16px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 363px;
+    word-wrap: break-word;
+    padding-top: 7px;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyQuestionRow .short-input-multiple {}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyQuestionRow .short-input-multiple-checkbox {float: left;
     margin-top: 6px;}
@@ -2220,10 +2262,25 @@ Upload pop-up
     margin-top: 3px;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyQuestionType select option { padding-left:5px;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .short-textarea-question-type {margin-left: 5px;
-    width: 530px;
+    width: 352px;
     height: 15px;} 
-#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .short-textarea-question-type textarea {width: 530px;
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .short-textarea-question-type textarea {width: 352px;
     height: 15px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .short-textarea-question-type input[type="text"] {width: 300px;
+    height: 15px;
+    background: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .paragraphedText {margin-left: 5px;
+    width: 352px;
+    height: 50px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .paragraphedText textarea {width: 352px;
+    height: 50px;
+    background: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .multipleChoiceUl,
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .checkboxUl,
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .selectListUl{ float: left;}
@@ -2241,7 +2298,7 @@ Upload pop-up
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .multipleChoiceAddNewLine {display: block;
     float: left;
     position: absolute;
-    left: 240px;
+    left: 390px;
     bottom: 10px;
     color: #515151 !important;
     font-family: Arial,Helvetica,sans-serif !important;
@@ -2342,8 +2399,22 @@ Upload pop-up
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyControlButtons .deleteSurvey:active,
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyControlButtons .deleteSurvey.activeBttnSurvey{background-position: -95px -28px;}
 
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyControlButtons .sortSurveyQuestion{background: url("../images/surveysControlsBttn.png") no-repeat;
+    display: block;
+    float: left;
+    width: 29px;
+    height: 28px;
+    margin-left: 4px;
+    background-position: -126px 0px;
+    cursor: move;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyControlButtons .sortSurveyQuestion:hover,
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyControlButtons .sortSurveyQuestion:active,
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .surveyControlButtons .sortSurveyQuestion.activeBttnSurvey{background-position: -126px -28px;}
+
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .width-400 .short-textarea {width: 300px !important;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .width-400 .short-textarea textarea {width: 300px !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .wrapperRadioScale {height: 32px;
+    position: relative;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .scaleMin,
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .scaleMax {margin-left: 5px;
     margin-right: 5px;
@@ -2403,27 +2474,30 @@ Upload pop-up
     width: 300px !important;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioScaleRow {display: block;
     float: left;
-    width: 16px;
+    height: 30px;
     margin-left: 5px;
-    margin-top: -12px;
+    margin-top: -10px;
     position: relative;
-    height: 30px;}
-#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioScaleRow span {position: absolute;
-    left:0px;
-    top:6px;
-    width: 16px;
-    text-align: center;
-    color: #515151;
+    width: 16px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioScaleRow span {color: #515151;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 11px;
     font-style: normal;
     font-weight: normal;
-    line-height: 13px;}
-#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioScaleRow input {position: absolute;
-    left:0px;
-    bottom:0px;
+    left: 0;
+    line-height: 15px;
+    position: absolute;
     text-align: center;
-    margin: 0 0 0 2px;}
+    top: 3px;
+    width: 16px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioScaleRow input {bottom: 0;
+    left: 0;
+    margin-bottom: 0;
+    margin-left: 2px;
+    margin-right: 0;
+    margin-top: 0;
+    position: absolute;
+    text-align: center;}
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .firstMin,
 #syrveyCustomForm .surveyBodyQuestions .surveyQuestion .firstMax {float: left;
     width: auto;
@@ -2433,4 +2507,579 @@ Upload pop-up
     font-size: 11px;
     font-style: normal;
     font-weight: bold;
-    line-height: 25px;}
+    line-height: 13px !important;
+    max-width: 130px;
+    padding-top: 7px;
+    word-wrap: break-word;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .firstMin {margin-right: 5px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .firstMax {margin-left: 10px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .bttn-browse {display: block;
+    float: left;
+    margin-right: 5px;
+    width: 120px;
+    height: 23px;
+    padding: 0px 5px;
+    background: url("../images/text-input-bg.png") repeat-x left top;
+    border: 1px solid #9b9b9b;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-left: 3px;
+    position: relative;
+    margin-left: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    color: #515151;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .bttn-browse:hover,
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .bttn-browse:active {border:1px solid #638caa !important;
+    -webkit-box-shadow: 0px 0px 3px 0px #515151;
+    box-shadow: 0px 0px 3px 0px #515151;    
+    color: #000 !important;
+    text-decoration: none;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .short-input-image {width: 208px !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .short-input-image input{width: 208px !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion { background: #00bbf3;
+    opacity: 0.8;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionTextPreviewHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionTextEditHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionDropboxEditHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionSingleChoiceEditHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionMultipleChoiceEditHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionSingleChoicePreviewHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestionDropboxPreviewHtml {background: transparent;
+    opacity: 1;}
+#syrveyCustomForm .surveyBodyQuestions .ui-sortable-helper {background: #00bbf3 !important;
+    border: 1px dashed #515151;
+    opacity: 1;}
+.SingleChoiceInput {width: 330px !important;}
+.SingleChoiceInput input {width: 330px !important;}
+.SingleChoiceInputEdit {width: 315px !important;}
+.SingleChoiceInputEdit input {width: 315px !important;}
+.selectListInputEdit {width: 335px !important;}
+.selectListInputEdit input {width: 335px !important;}
+#syrveyCustomForm .surveyBodyQuestions .ui-sortable-helper label,
+#syrveyCustomForm .surveyBodyQuestions .ui-sortable-helper .surveyStaticTitleText{color: #fff !important;}
+
+#syrveyCustomForm .add-new-question {padding: 5px 0px 10px 0px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed #515151;}
+#syrveyCustomForm .add-new-question .label {color: #515151;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 25px;
+    width: 160px;}
+#syrveyCustomForm .add-new-question #bottom_add_button {background: url("../images/surveysControlsBttn.png") no-repeat;
+    display: block;
+    float: left;
+    width: 29px;
+    height: 28px;
+    background-position: 0px 0px;
+    border: none;
+    margin-right: 10px;}
+#syrveyCustomForm .add-new-question #bottom_add_button:hover,
+#syrveyCustomForm .add-new-question #bottom_add_button:active{background-position: 0px -28px;
+    cursor: pointer;}
+.input-width-350 { width: 350px !important;}
+.input-width-350 input { width: 350px !important;}
+#syrveyCustomForm .surveyHeader .errorMessage {color: #ff0000;
+    float: left;
+    margin-left: 160px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 15px;}
+#syrveyCustomForm .surveyBodyQuestions .scaleQuestionType {float: left;}
+
+
+
+/*======Surveys REPLY=========================================================*/
+/*======Surveys Reply HEADER===*/
+.surveyReplyInside { display: none;}
+.surveysWithVideo {display: none;}
+.surveyReplyHeader {padding-top: 10px;
+    padding-bottom: 10px;
+    width: 980px;
+    margin: 0 auto;}
+.surveyReplyHeader .surveyHeaderLabel {width: 33%;
+    float: left;
+    padding: 3px 0px;
+    display: block;}
+.surveyReplyHeader .surveyHeaderLabel label { width: 100%;
+    color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 22px;}
+.surveyReplyHeader .programName {text-align: left;}
+.surveyReplyHeader .sessionName {text-align: center;}
+.surveyReplyHeader .programDate {text-align: right;
+    float: right;}
+.surveyReplyHeader .firstLastName {text-align: left;}
+.surveyReplyHeader .firstLastName label {font-weight: bold;}
+.surveyReplyHeader .surveyReplyName {text-align: right;
+    float: right;}
+.surveyReplyHeader .surveyReplyName label {font-weight: bold;}
+.horisontalDivider { width: 980px;
+    -webkit-box-shadow: 0px 0px 2px 0px #515151;
+    box-shadow: 0px 0px 2px 0px #515151;
+    height: 1px;
+    background: #515151;
+    margin: 5px auto;}
+.surveyReplyProgramSessionDropDown {float: left;
+    width: 990px;
+    margin-left: 15px;}
+.surveyReplyProgramSessionDropDown h2 {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 20px;
+    line-height: 22px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 10px;}
+.surveyReplyProgramSessionDropDown label.title { color: #515151;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 21px;
+    margin-right: 5px;}
+.surveyReplyProgramSessionDropDown .select-surveyReply { width: 400px !important;}
+.surveyReplyProgramSessionDropDown .select-surveyReply select {width: 398px !important;
+    margin-top: 2px;}
+.surveyReplyProgramSessionDropDown .select-surveyReply-300 { width: 300px !important;}
+.surveyReplyProgramSessionDropDown .select-surveyReply-300 select {width: 298px !important;
+    margin-top: 2px;}
+.searchSurveyReply {}
+.searchSurveyReply span.long-input {width: 825px !important;}
+.searchSurveyReply span.long-input input {width: 825px !important;}
+.searchSurveyReply h2 {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 20px;
+    line-height: 22px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0px;}
+#media_wrapper {margin: 0 auto;}
+.contentQuestionWithVideoImage img {margin: 0 auto;
+    max-height: 400px !important;}
+
+
+/*===Showcase===*/
+.showcase {padding-bottom: 33px;
+    width: 980px !important;}
+.showcase-load {height: 470px; /* Same as showcase javascript option */
+    overflow: hidden;}
+.showcase-onepage {}
+/* Container when content is shown in slider */
+.showcase {position: relative;
+    margin: auto;}
+.showcase-content-container { height: 500px !important;}
+/* Navigation arrows */
+.showcase-arrow-previous, .showcase-arrow-next, .showcase-arrow-next-notClickable {position: absolute;
+    background: url('../images/arrows.png') no-repeat;
+    width: 33px;
+    height: 33px;
+    bottom: 0px;
+    cursor: pointer;}
+.showcase-arrow-previous {left: 0px;}
+.showcase-arrow-previous:hover {background-position: 0px -34px;}
+.showcase-arrow-next, .showcase-arrow-next-notClickable {right: 0px;
+    background-position: -34px 0;}
+.showcase-arrow-next:hover, .showcase-arrow-next-notClickable:hover {background-position: -34px -34px;}	
+#finishQuestionLink{position: absolute;
+    bottom: 0px;
+    cursor: pointer;
+    right: 0px;
+    height: 33px;
+    width: auto;
+    padding-right: 40px;
+    display: block;
+    border: none !important;
+    background: url('../images/arrows-finish.png') no-repeat;
+    background-position: top right;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 33px;
+    color: #505050;}
+#finishQuestionLink:hover,
+#finishQuestionLink:active {background-position: bottom right;
+    text-decoration: none;
+    color: #929292;}
+
+.scoreQuestionsCount { margin-left: 370px;
+    padding-bottom: 10px;
+    padding-top: 20px;}
+.scoreQuestionsCount span label { display: block;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 25px;
+    padding-left: 2px;
+    padding-right: 2px;}
+.scoreQuestionsCount .short-input {width: 40px !important;}
+.scoreQuestionsCount .short-input input {width: 40px !important;}
+.contentQuestionWithVideoImage { -webkit-box-shadow: 0px 0px 2px 0px #515151;
+    box-shadow: 0px 0px 2px 0px #515151;
+    border: 1px solid #515151;
+    width: 966px;
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+    text-align: center;
+    height: 400px;
+    overflow-y: auto !important;}
+.contentQuestionWithVideoImage p {text-align: left;
+    padding: 5px;
+    margin: 0px;}
+.contentQuestionWithVideoImage img{ display: block;
+    text-align: center;}
+.contentQuestionWithVideoImage.videoCentered div {margin: 0 auto;}
+
+/* Content */
+.showcase-content {text-align: left;
+    width: 980px !important;
+    height: 500px !important;}	
+.showcase-content-wrapper {text-align: left;  
+    display: block;
+    vertical-align: middle;}	
+/* Styling the tooltips */
+.showcase-plus-anchor {background-image: url('../images/plus.png');
+    background-repeat: no-repeat;}	
+.showcase-plus-anchor:hover{background-position: -32px 0;}
+div.showcase-tooltip { background-color: #fff;
+    color: #000;
+    text-align: left;
+    padding: 5px 8px;
+    background-image: url('../images/white-opacity-80.png');}
+/* Styling the caption */
+.showcase-caption {color: #000;
+    padding: 8px 15px;
+    text-align: left;
+    position: absolute;
+    bottom: 10px; left: 10px; right: 10px;
+    display: none;
+    background-image: url('../images/white-opacity-80.png');}
+.showcase-onepage .showcase-content {margin-bottom: 10px;}
+/* Button Wrapper */
+.showcase-button-wrapper {clear: both;
+    margin-top: 10px;
+    text-align: center;}	
+.showcase-button-wrapper span {
+    margin-right: 3px;
+    padding: 2px 5px 0px 5px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #444444;}
+.showcase-button-wrapper span.active {color: #515151;}
+/* Thumbnails */
+.showcase-thumbnail-container {background-color: #fff;}
+.showcase-thumbnail-wrapper {overflow: hidden;}
+.showcase-thumbnail {width: 120px;
+    height: 90px;
+    cursor: pointer;
+    border: solid 1px #333;
+    position: relative;}
+.showcase-thumbnail-caption {
+    position: absolute;
+    bottom: 2px;
+    padding-left: 10px;
+    padding-bottom: 5px;}
+.showcase-thumbnail-content {
+    padding: 10px;
+    text-align: center;
+    padding-top: 25px;}
+.showcase-thumbnail-cover {
+    background-image: url('../images/black-opacity-40.png');
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;}
+.showcase-thumbnail:hover {border: solid 1px #999;}	
+.showcase-thumbnail:hover .showcase-thumbnail-cover {display: none;}
+.showcase-thumbnail.active {border: solid 1px #999;}
+.showcase-thumbnail.active .showcase-thumbnail-cover { display: none;}	
+.showcase-thumbnail-wrapper-horizontal {padding: 10px;}	
+.showcase-thumbnail-wrapper-horizontal .showcase-thumbnail { margin-right: 10px;
+        width: 116px;}	
+.showcase-thumbnail-wrapper-vertical {
+        padding: 10px;}	
+.showcase-thumbnail-wrapper-vertical .showcase-thumbnail { margin-bottom: 10px;}		
+.showcase-thumbnail-button-backward,
+.showcase-thumbnail-button-forward { padding: 7px;
+        cursor: pointer;}
+.showcase-thumbnail-button-backward {
+        padding-bottom: 0px;
+        padding-right: 0px;}
+	
+.showcase-thumbnail-button-backward .showcase-thumbnail-vertical,
+.showcase-thumbnail-button-forward .showcase-thumbnail-vertical,
+.showcase-thumbnail-button-forward .showcase-thumbnail-horizontal,
+.showcase-thumbnail-button-backward .showcase-thumbnail-horizontal{background-image: url('../images/arrows-small.png');
+        background-repeat: no-repeat;
+        display: block;
+        width: 17px;
+        height: 17px;}
+.showcase-thumbnail-button-backward .showcase-thumbnail-vertical {
+        background-position: 0 -51px;
+        margin-left: 55px;}
+.showcase-thumbnail-button-backward:hover .showcase-thumbnail-vertical {
+        background-position: -17px -51px}
+.showcase-thumbnail-button-forward .showcase-thumbnail-vertical {
+        background-position: 0 -34px;
+        margin-left: 55px;}
+.showcase-thumbnail-button-forward:hover .showcase-thumbnail-vertical {
+        background-position: -17px -34px;}
+.showcase-thumbnail-button-backward .showcase-thumbnail-horizontal {
+        background-position: 0 -17px;
+        margin-top: 40px;
+        margin-bottom: 40px;}
+.showcase-thumbnail-button-backward:hover .showcase-thumbnail-horizontal {
+        background-position: -17px -17px;}
+.showcase-thumbnail-button-forward .showcase-thumbnail-horizontal {
+        background-position: 0 0;
+        margin-top: 40px;
+        margin-bottom: 40px;}
+.showcase-thumbnail-button-forward:hover .showcase-thumbnail-horizontal {
+        background-position: -17px 0;}
+/* Hide button text */
+.showcase-thumbnail-button-forward span span,
+.showcase-thumbnail-button-backward span span { display: none;}
+
+.surveyReplyContent {position: relative;}
+.surveyReplyContent .questionCount { color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 22px;
+    padding-bottom: 10px;}
+.surveyReplyContent .questionCount .itemNumber {font-weight: bold;
+    font-size: 20px;}
+
+/*===================Sycn from CM=============================================*/
+.cm-user-profile-wrapper-border-top {width: 710px;
+    height: 1px;
+    background: #638caa;
+    box-shadow: 0 0 3px #515151;}
+.cm-user-profile-wrapper {overflow: hidden;
+    width: 710px;}
+.cm-user-profile-wrapper .photo-profile { overflow: hidden;
+    width: 250px;
+    float: left;}
+.cm-user-profile-wrapper .photo-profile .photo {box-shadow: 0 0 3px #515151;
+    border: 1px solid #638caa;
+    padding: 1px;
+    float: left;
+    margin: 3px;}
+.cm-user-profile-wrapper .photo-profile .photo img {min-height: 130px;
+    max-height: 150px;
+    min-width: 80px;
+    display: block;}
+.cm-user-profile-wrapper .photo-profile .name-profile {float: left;
+    margin-left: 10px;}
+.cm-user-profile-wrapper .photo-profile .name-profile .name-lastName {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 25px;
+    margin-top: 22px;}
+.cm-user-profile-wrapper .photo-profile .name-profile .name-lastName span {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 25px;
+    display: inline-block;}
+.cm-user-profile-wrapper .photo-profile .name-profile .name-lastName .name {margin-right: 5px;}
+.cm-user-profile-wrapper .photo-profile .user-profile-link:link,
+.cm-user-profile-wrapper .photo-profile .user-profile-link:visited {color:#06b4c9;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 15px;
+    text-decoration: underline;}
+.cm-user-profile-wrapper .photo-profile .user-profile-link:hover,
+.cm-user-profile-wrapper .photo-profile .user-profile-link:active {text-decoration: none;}
+.cm-user-profile-wrapper .user-badges {width: 380px;
+    padding-left: 20px;
+    position: relative;
+    float: right;
+    margin-top: 5px;
+    min-height: 70px;}
+.cm-user-profile-wrapper .user-badges .one-badge {float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;}
+.cm-user-profile-wrapper .user-badges .one-badge img {width: 60px !important;
+    margin: 0px !important;}
+.cm-user-profile-wrapper .user-badges h3 { float:left;
+    padding:0px;
+    width:12px;
+    display:block;
+    -webkit-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg);	
+    -o-transform: rotate(-90deg);
+    position:absolute;
+    left:0px;
+    top:50px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    line-height:14px;
+    font-style:normal;
+    font-weight:500;
+    text-transform:uppercase;
+    color:#515151;}
+.cm-user-profile-wrapper .user-badges h3 span { text-decoration:none !important;
+    color:#515151;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: none;}
+.cm-user-profile-wrapper .user-badges .badges {display: block;}
+.cm-user-profile-wrapper .experiments-block { display: block;
+    margin-top: 10px;}
+.cm-user-profile-wrapper .experiments-block h3 {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;}
+.cm-user-profile-wrapper .experiments-block .one-link {display: list-item;
+    list-style-position: inside;
+    list-style-type: disc;
+    margin-left: 10px;
+    padding-bottom: 2px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 2px;}
+.cm-user-profile-wrapper .experiments-block .one-link a:link,
+.cm-user-profile-wrapper .experiments-block .one-link a:visited {color:#06b4c9;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 15px;
+    text-decoration: underline;}
+.cm-user-profile-wrapper .experiments-block .one-link a:hover,
+.cm-user-profile-wrapper .experiments-block .one-link a:active {text-decoration: none;}
+.cm-user-profile-wrapper .points-block {display: block;
+    margin-top: 10px;}
+.cm-user-profile-wrapper .points-block h3 {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;}
+.cm-user-profile-wrapper .points-block h3 span {font-weight: bold;}
+
+
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMinLabel,
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMaxLabel {width: 307px !important;
+    display: block;
+    float: left;
+    height: 13px;
+    padding: 5px;
+    background: url("../images/text-input-bg.png") repeat-x left top;
+    border: 1px solid #9b9b9b;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right : 5px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMinLabel input,
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMaxLabel input {margin:0px !important;
+    height: 13px;
+    background: none;
+    border: none;
+    -moz-user-select: normal !important;
+    -khtml-user-select: normal !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+    color: #515151 !important;
+    width: 300px !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMinLabelVal, 
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMaxLabelVal {width: auto !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMaxLabelVal {margin-left: 155px;
+    margin-top: 10px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .smileMaxLabel {margin-top: 20px !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .wrapperRadioSmile {height: 70px;
+    position: relative;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioSmileRow {display: block;
+    float: left;
+    height: 55px;
+    margin-left: 5px;
+    margin-top: 7px;
+    position: relative;
+    width: 45px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioSmileRow span {color: #515151;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: normal;
+    left: 0;
+    line-height: 15px;
+    position: absolute;
+    text-align: center;
+    top: 17px;
+    width: 16px;}
+#syrveyCustomForm .surveyBodyQuestions .surveyQuestion .radioSmileRow input {top: 0;
+    left: 13px;
+    margin-bottom: 0;
+    margin-left: 2px;
+    margin-right: 0;
+    margin-top: 0;
+    position: absolute;
+    text-align: center;}
+#ss.loading select {display: none !important;}
+.programs-program-type-input {width: 185px !important;}
+.programs-program-type-input select {width: 180px !important;}
+.programs-program-type-input select option {width: auto !important;}
+#syrveyCustomForm .surveyBodyQuestions .surveyError {width: 155px !important;
+    line-height: 15px !important;}
+.smileFirstMin { line-height: 13px !important;
+    max-width: 130px;
+    padding-top: 7px;
+    word-wrap: break-word;
+    text-align: right;}
+.smileFirstMax { line-height: 13px !important;
+    max-width: 130px;
+    word-wrap: break-word;
+    padding-top: 7px;}
+.reports-programs-page select#sessions,
+.reports-programs-page select#schools,
+.reports-programs-page select#sites {display: none !important;}
+
+.reports-persons-page-form select#sessions,
+.reports-persons-page-form select#schools,
+.reports-persons-page-form select#sites {display: none !important;}
+
+/*--gif animation--*/
+.gif-animation-wrapper {position: absolute;
+    left: 0px;
+    top: 0px;
+    display: none;
+    z-index: 999998;
+    background: #000;
+    opacity: 0.5;}
+.gif-animation-wrapper .gif-animation {width: 128px;
+    height: 128px;
+    display: block;
+    position: absolute;
+    z-index: 999998;
+    background:transparent url('../images/loading-gif-animation.gif') no-repeat;}

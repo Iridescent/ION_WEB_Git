@@ -13,7 +13,10 @@ function GridQuestion(id, title, required) {
         //TODO implement
     };
     
-    this.flush = function () {};
+    this.baseFlush = this.flush;
+    this.flush = function () {
+        this.baseFlush();
+    };
     
     this.variants = [];
 }

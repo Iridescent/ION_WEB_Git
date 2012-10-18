@@ -121,27 +121,40 @@ class QueryPerson extends CActiveRecord {
         return $this->findAll($criteria);
     }
     
-    public function GetNextForSynchronization() {
+    public function GetNextForSynchronization($userId) {
         $criteria = new CDbCriteria;
         $criteria->alias = 'p';
-        $criteria->join='LEFT JOIN personsynchronizationresult psr ON p.ID = psr.PersonId';
-        $criteria->condition = 'psr.PersonId IS NULL';
+        $criteria->join='LEFT JOIN personsynchronizationresult psr ON p.ID = psr.PersonId '.
+                        'INNER JOIN household h ON p.Household = h.ID '.
+                        'INNER JOIN locations l ON h.Location = l.ID';
+        $criteria->condition = 'psr.PersonId IS NULL AND p.Type = 2 '.
+                               'AND (' . Locations::model()->getLocationClause($userId) . ')';
         $criteria->limit = 1;
         return $this->find($criteria);
+    }
+    
+    public function GetPersonsCountToSync($userId) {
+        $sql = 'SELECT count(*) '.
+               'FROM persons p ' .
+               'INNER JOIN household h ON p.Household = h.ID ' .
+               'INNER JOIN locations l ON h.Location = l.ID ' .
+               'WHERE p.Type = 2 AND (' . Locations::model()->getLocationClause($userId) .')';
+        $command = Yii::app()->db->createCommand($sql);
+        return $command->queryScalar();
     }
     
     private function applySecurity(&$with){
         if (!Yii::app()->user->checkAccess(UserRoles::SuperAdmin)) {
             if (Yii::app()->user->checkAccess(UserRoles::LocalAdmin)) {//local admin
                 $with['HouseholdRelation'] = array(
-                        'condition'=>'HouseholdRelation.Location = :locationId',
-                        'params'=>array(':locationId'=>Yii::app()->user->location),
-                    );
+                    'condition'=>'HouseholdRelation.Location = :locationId',
+                    'params'=>array(':locationId'=>Yii::app()->user->location),
+                );
             } else {// School representative
                 $with['SchoolRelation'] = array(
-                        'condition'=>'SchoolRelation.Location=:locationId',
-                        'params'=>array(':locationId'=>Yii::app()->user->location),
-                    );
+                    'condition'=>'SchoolRelation.Location=:locationId',
+                    'params'=>array(':locationId'=>Yii::app()->user->location),
+                );
             }
         }
     }
